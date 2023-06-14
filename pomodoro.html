@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pomodoro Timer</title>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" type="text/css" href="pomodoro.css">
+</head>
+<body class="dark-mode">
+    <h1>Pomodoro Timer</h1>
+    <div class="container">
+        <div id="timer" class="text-center">25:00</div>
+        <div class="form-group">
+            <label for="inputTime">Enter time in minutes:</label>
+            <input type="number" id="inputTime" class="form-input" placeholder="Enter time">
+        </div>
+        <div class="form-group">
+            <button id="startButton" class="btn btn-primary">Start</button>
+            <button id="resetButton" class="btn">Reset</button>
+        </div>
+        <div class="form-group">
+            <button id="breakButton5" class="btn">5 Min Break</button>
+            <button id="breakButton10" class="btn">10 Min Break</button>
+            <button id="breakButton15" class="btn">15 Min Break</button>
+        </div>
+        <!--<div class="form-group">
+            <label for="darkModeToggle">Dark Mode:</label>
+            <input type="checkbox" id="darkModeToggle" checked>
+        </div>-->
+        <div class="form-group">
+        <h6><a href="index.html">Click here to go back to the home page</a></h6>
+        </div>
+    </div>
+    <audio id="completionSound" src="/Assets/sound.mp3"></audio>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+body {
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    color: #fff;
+    margin-top: 40px;
+}
+
+.container {
+    max-width: 400px;
+    margin: 40px auto;
+}
+
+#timer {
+    font-size: 48px;
+    margin: 20px 0;
+}
+
+.form-group {
+    margin-top: 20px;
+}
+
+.form-input {
+    width: 100%;
+}
+
+.btn {
+    margin: 10px;
+}
+
+.dark-mode {
+    background-color: #333;
+    color: #fff;
+}

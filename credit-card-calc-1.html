@@ -4,9 +4,44 @@
     <title>Math Boxes Form with Spectre CSS</title>
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
     <style>
-        .result-container {
-            text-align: right;
-            margin-top: 10px;
+        /* Dark mode styles */
+        body {
+            background-color: #333;
+            color: #f2f2f2;
+        }
+
+        .container {
+            background-color: #222;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .container h1 {
+            color: #f2f2f2;
+        }
+
+        .table {
+            color: #f2f2f2;
+            background-color: transparent;
+            border-collapse: collapse;
+        }
+
+        .table thead th {
+            color: #f2f2f2;
+            background-color: #222;
+        }
+
+        .table tbody td {
+            border-color: #222;
+        }
+
+        /* Button styles */
+        .toggle-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
         }
     </style>
     <script>
@@ -14,15 +49,15 @@
             var num1 = parseInt(document.getElementById('num1').value);
             var num2 = parseInt(document.getElementById('num2').value);
             var num3 = parseInt(document.getElementById('num3').value);
-            var sum = num1 + num2 + num3;
+            var sum = 
             document.getElementById('result').value = sum;
         }
     </script>
 </head>
-<body>
-    <h1>Math Boxes Form with Spectre CSS</h1>
+<body>    <div class="container">
+    <h1>Credit Card Paydown Calculator</h1>
+    <h4>Alternatively, instead of using this calculator, you could pay down the credit card with the highest interest rate first. </h4>
 
-    <div class="container">
         <form>
         <table class="table">
             <thead>
@@ -35,15 +70,15 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><input type="text"></input></td>
-                    <td><input type="number"></input></td>
-                    <td><input type="number"></input></td>
+                    <td><input type="text" class="form-input"></input></td>
+                    <td><input type="number" class="form-input"></input></td>
+                    <td><input type="number" class="form-input"></input></td>
                     <td id="result1"></td>
                 </tr>
                 <tr>
-                    <td><input type="text"></input></td>
-                    <td><input type="number"></input></td>
-                    <td><input type="number"></input></td>
+                    <td><input type="text" class="form-input"></input></td>
+                    <td><input type="number" class="form-input"></input></td>
+                    <td><input type="number" class="form-input"></input></td>
                     <td id="result1"></td>
                 </tr>
                 <tr>
@@ -87,7 +122,8 @@
 
 
   <input type="submit" class="btn btn-success" value="Get Result">
-
+        <h6><a href="index.html">Click here to go back to the home page</a></h6>
+        </div>
         </form>
     </div>
 </body>
