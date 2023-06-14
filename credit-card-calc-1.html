@@ -45,85 +45,165 @@
         }
     </style>
     <script>
-        function calculateSum() {
-            var num1 = parseInt(document.getElementById('num1').value);
-            var num2 = parseInt(document.getElementById('num2').value);
-            var num3 = parseInt(document.getElementById('num3').value);
-            var sum = 
-            document.getElementById('result').value = sum;
+        function calculateSum(event) {
+            event.preventDefault(); // Prevent form submission
+            
+            var rows = Array.from(document.querySelectorAll('#data-table tbody tr')); // Get all table rows
+            
+            var magicNumbers = [];
+            
+            rows.forEach(function (row) {
+                var inputs = row.querySelectorAll('input[type="number"]'); // Get all input elements in each row
+                var resultCell = row.querySelector('.result'); // Get the result cell in each row
+                var magicNumberCell = row.querySelector('.magic-number'); // Get the magic number cell in each row
+
+                var name = row.querySelector('.name').value || 'N/A';
+                var outstandingBalance = parseFloat(inputs[0].value) || 0;
+                var minimumPayment = parseFloat(inputs[1].value) || 0;
+                
+                var magicNumber = outstandingBalance / minimumPayment;
+                magicNumberCell.textContent = magicNumber.toFixed(2); // Display the magic number in the magic number cell
+                
+                magicNumbers.push({ row, magicNumber, name });
+            });
+
+            magicNumbers.sort(function (a, b) {
+                return a.magicNumber - b.magicNumber;
+            });
+
+            magicNumbers.forEach(function (item, index) {
+                var resultText = '';
+                switch (index) {
+                    case 0:
+                        resultText = 'First';
+                        break;
+                    case 1:
+                        resultText = 'Second';
+                        break;
+                    case 2:
+                        resultText = 'Third';
+                        break;
+                    case 3:
+                        resultText = 'Fourth';
+                        break;
+                    case 4:
+                        resultText = 'Fifth';
+                        break;
+                    case 5:
+                        resultText = 'Sixth';
+                        break;
+                    case 6:
+                        resultText = 'Seventh';
+                        break;
+                    case 7:
+                        resultText = 'Eighth';
+                        break;
+                    case 8:
+                        resultText = 'Ninth';
+                        break;
+                    case 9:
+                        resultText = 'Tenth';
+                        break;
+                    default:
+                        resultText = (index + 1) + 'th';
+                        break;
+                }
+                item.row.querySelector('.result').textContent = resultText;
+            });
         }
     </script>
 </head>
-<body>    <div class="container">
-    <h1>Credit Card Paydown Calculator</h1>
-    <h4>Alternatively, instead of using this calculator, you could pay down the credit card with the highest interest rate first. </h4>
-
-        <form>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Account</th>
-                    <th>Outstanding Balance</th>
-                    <th>Minimum Monthly Payment</th>
-                    <th>Result</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input type="text" class="form-input"></input></td>
-                    <td><input type="number" class="form-input"></input></td>
-                    <td><input type="number" class="form-input"></input></td>
-                    <td id="result1"></td>
-                </tr>
-                <tr>
-                    <td><input type="text" class="form-input"></input></td>
-                    <td><input type="number" class="form-input"></input></td>
-                    <td><input type="number" class="form-input"></input></td>
-                    <td id="result1"></td>
-                </tr>
-                <tr>
-                    <td><input type="text"></input></td>
-                    <td><input type="number"></input></td>
-                    <td><input type="number"></input></td>
-                    <td id="result1"></td>
-                </tr>
-                <tr>
-                    <td><input type="text"></input></td>
-                    <td><input type="number"></input></td>
-                    <td><input type="number"></input></td>
-                    <td id="result1"></td>
-                </tr>
-                <tr>
-                    <td><input type="text"></input></td>
-                    <td><input type="number"></input></td>
-                    <td><input type="number"></input></td>
-                    <td id="result1"></td>
-                </tr>
-                <tr>
-                    <td><input type="text"></input></td>
-                    <td><input type="number"></input></td>
-                    <td><input type="number"></input></td>
-                    <td id="result1"></td>
-                </tr>
-                <tr>
-                    <td><input type="text"></input></td>
-                    <td><input type="number"></input></td>
-                    <td><input type="number"></input></td>
-                    <td id="result1"></td>
-                </tr>
-                <tr>
-                    <td><input type="text"></input></td>
-                    <td><input type="number"></input></td>
-                    <td><input type="number"></input></td>
-                    <td id="result1"></td>
-                </tr>
-            </tbody>
-        </table>
-
-
-  <input type="submit" class="btn btn-success" value="Get Result">
-        <h6><a href="index.html">Click here to go back to the home page</a></h6>
-        </div>
+<body>
+    <div class="container">
+        <h1>Credit Card Debt Paydown Calculator</h1>
+        <h6></h6>
+        <form onsubmit="calculateSum(event)">
+            <table class="table" id="data-table">
+                <thead>
+                    <tr>
+                        <th>Account</th>
+                        <th>Outstanding Balance</th>
+                        <th>Minimum Monthly Payment</th>
+                        <th>Magic Number</th>
+                        <th>Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" class="form-input name" placeholder="Name"></td>
+                        <td><input type="number" class="form-input"></td>
+                        <td><input type="number" class="form-input"></td>
+                        <td class="magic-number"></td>
+                        <td class="result"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="form-input name" placeholder="Name"></td>
+                        <td><input type="number" class="form-input"></td>
+                        <td><input type="number" class="form-input"></td>
+                        <td class="magic-number"></td>
+                        <td class="result"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="form-input name" placeholder="Name"></td>
+                        <td><input type="number" class="form-input"></td>
+                        <td><input type="number" class="form-input"></td>
+                        <td class="magic-number"></td>
+                        <td class="result"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="form-input name" placeholder="Name"></td>
+                        <td><input type="number" class="form-input"></td>
+                        <td><input type="number" class="form-input"></td>
+                        <td class="magic-number"></td>
+                        <td class="result"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="form-input name" placeholder="Name"></td>
+                        <td><input type="number" class="form-input"></td>
+                        <td><input type="number" class="form-input"></td>
+                        <td class="magic-number"></td>
+                        <td class="result"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="form-input name" placeholder="Name"></td>
+                        <td><input type="number" class="form-input"></td>
+                        <td><input type="number" class="form-input"></td>
+                        <td class="magic-number"></td>
+                        <td class="result"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="form-input name" placeholder="Name"></td>
+                        <td><input type="number" class="form-input"></td>
+                        <td><input type="number" class="form-input"></td>
+                        <td class="magic-number"></td>
+                        <td class="result"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="form-input name" placeholder="Name"></td>
+                        <td><input type="number" class="form-input"></td>
+                        <td><input type="number" class="form-input"></td>
+                        <td class="magic-number"></td>
+                        <td class="result"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="form-input name" placeholder="Name"></td>
+                        <td><input type="number" class="form-input"></td>
+                        <td><input type="number" class="form-input"></td>
+                        <td class="magic-number"></td>
+                        <td class="result"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="form-input name" placeholder="Name"></td>
+                        <td><input type="number" class="form-input"></td>
+                        <td><input type="number" class="form-input"></td>
+                        <td class="magic-number"></td>
+                        <td class="result"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-success">Get Result</button>
+                    <h6><a href="index.html">Click here to go back to the home page</a></h6>
+        
         </form>
     </div>
 </body>
