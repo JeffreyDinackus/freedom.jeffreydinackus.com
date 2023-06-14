@@ -9,42 +9,66 @@
   <style>
     /* Custom Styles */
     body {
-      background-color: #f4f4f4;
+      background-color: #343a40; /* Dark background color */
+      color: #f8f9fa; /* Light text color */
     }
     
-    .hero {
-      background-color: #3498db;
-      color: #fff;
+    .backdrop {
+      /*background-color: #212529; *//* Dark backdrop background color */
+      color: #f8f9fa; /* Light text color */
       padding: 40px;
       text-align: center;
+      margin: 10px 0;
     }
     
-    .hero h1 {
+    .backdrop h1 {
       font-size: 36px;
     }
     
     .content {
       margin: 40px 0;
       padding: 20px;
-      background-color: #fff;
+      background-color: #454d55; /* Dark content background color */
       border-radius: 5px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      color: #f8f9fa; /* Light text color */
+    }
+    
+    .navbar {
+      background-color: #343a40; /* Dark navbar background color */
+      color: #f8f9fa; /* Light text color */
+    }
+    
+    .navbar a {
+      color: #f8f9fa; /* Light link color */
+      font-style: italic;
+    }
+
+
+    
+    .footer {
+      background-color: #343a40; /* Dark footer background color */
+      color: #f8f9fa; /* Light text color */
+    }
+    .italic-text {
+      font-style: italic;
     }
   </style>
 </head>
 <body>
   <header class="navbar">
     <section class="navbar-section">
+    <div class="container">
       <a href="#" class="navbar-brand">The Freedom Project</a>
     </section>
     <section class="navbar-section">
       <a href="#" class="btn btn btn-link">Contact</a>
-    </section>
+    </section></div>
   </header>
   
-  <div class="hero">
+  <div class="backdrop bg-primary">
     <h1>Welcome to the Freedom Project</h1>
-    <p>This is the index page of my website.</p>
+    <p><span class="italic-text">Welcome Freedom Fighters, </span>You will find calculators to help you with your finances and making informed financial decisions.</p>
   </div>
   
 <div class="container">
@@ -53,15 +77,24 @@
     <div class="column col-4">
       <h5><a href="credit-card-calc-1.html">Calculator for Paying off Credit Cards</a></h5>
       <h5>Bimonthly Mortgage Caculator</h5>
+      <h5>Pomodoro timer</h5>
+      <h5>days left in my life calculator</h5>
+      <h5>Retirement calculator</h5>
     </div>
     <div class="column col-4">
       <h5>Expense Ratio Calculator</h5>
+      <h5>How fast will my money double calculator(rule of 72)</h5>
+      <h5>Financial levels calculators 1 - 7</h5>
     </div>
     <div class="column col-4">
       <h5>Real Estate vs Stocks Calculator</h5>
+      <h5>Financial independance calculator FI RE</h5>
+      <h5>reoccuring expense calculator (rule of 752)</h5>
+
     </div>
 
 
+      
   </div>
 </div></div>
 
@@ -72,10 +105,16 @@
       <p>Integer finibus risus id semper tincidunt. Nam sed vestibulum lectus. Nullam sagittis tellus eu nulla convallis commodo. In ut ex lobortis, pharetra ligula vel, dignissim purus.</p>
     </div>
   </div>
-  
+    <div class="container">
+    <div class="content">
+    <h6>This is FREE AND OPEN SOURCE SOFTWARE (FOSS)</h6>
+    <h6><a href="">See our Github page for all code and formulas used on this website here.</a></h6>
+    <p><a href="">Submit a improvement here.</a></p>
+</div></div>
+
   <footer class="footer">
     <div class="container">
-      <p>&copy; 2023 My Website. All rights reserved.</p>
+      <p>Contact the developer here</p>
     </div>
   </footer>
 </body>
