@@ -144,6 +144,8 @@ function updateTitle(time) {
 }
 
 function playSound() {
-    const audio = document.getElementById("completionSound");
+  const audio = document.getElementById("completionSound");
+  audio.addEventListener("canplaythrough", () => {
     audio.play();
+  });
 }
