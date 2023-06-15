@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Savings Calculator</title>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <style>
+        body {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #fff;
+            margin-top: 40px;
+        }
+
+        .form-group {
+            margin-top: 20px;
+        }
+
+        .form-input {
+            width: 100%;
+        }
+
+        .btn {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Savings Calculator</h1>
+        <div class="form-group">
+            <label for="inputSpendingRate">Spending Rate (as a % of your total income, example: 85%):</label>
+            <input type="number" id="inputSpendingRate" class="form-input" placeholder="Enter spending rate">
+        </div>
+        <div class="form-group">
+            <label for="inputSavingsRate">Savings Rate (as a % of your total income, example: 15%):</label>
+            <input type="number" id="inputSavingsRate" class="form-input" placeholder="Enter savings rate">
+        </div>
+        <div class="form-group">
+            <button id="calculateButton" class="btn btn-primary">Calculate</button>
+        </div>
+        <div id="result" class="form-group"></div> <!-- Result element -->
+        <div class="form-group">
+            <h6><a href="index.html">Click here to go back to the home page</a></h6>
+        </div>
+        <div class="form-group">
+            <h6><a href="index.html">Click here to go back to submit an improvement</a></h6>
+        </div>
+    </div>
+
+    <script>
+        const calculateButton = document.getElementById("calculateButton");
+        calculateButton.addEventListener("click", () => {
+            const spendingRate = parseFloat(document.getElementById("inputSpendingRate").value);
+            const savingsRate = parseFloat(document.getElementById("inputSavingsRate").value);
+            const resultElement = document.getElementById("result");
+
+            if (isNaN(spendingRate) || isNaN(savingsRate)) {
+                resultElement.textContent = "Please enter valid numbers for spending rate and savings rate.";
+                return;
+            }
+            if (spendingRate == 100){
+                resultElement.textContent = "If the spending rate is 100, you will never have enough to save 1 month of expenses.";
+                return;
+            }
+            const months = spendingRate / savingsRate;
+            resultElement.textContent = `It will take approximately ${months.toFixed(2)} months to save up 1 month of normal spending.`;
+        });
+    </script>
+</body>
+</html>

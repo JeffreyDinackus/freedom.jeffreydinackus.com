@@ -20,7 +20,7 @@
         }
 
         #timer {
-            font-size: 48px;
+            font-size: 72px; /* Updated font size */
             margin: 20px 0;
         }
 
@@ -69,7 +69,6 @@
         </div>
     </div>
     <audio id="completionSound" src="/Assets/sound.mp3"></audio>
-    <script src="script.js"></script>
     <script>
         // Check if the browser supports notifications
         if ("Notification" in window) {
@@ -85,12 +84,29 @@
 
         // Rest of your JavaScript code here
         // Timer variables
-        let time = 1500; // 25 minutes in seconds
+        let time;
         let timerId;
         let isRunning = false;
 
         // Timer display element
         const timerElement = document.getElementById("timer");
+
+        // Retrieve the timer value from Local Storage
+        function retrieveTimerValue() {
+            const storedValue = localStorage.getItem("timerValue");
+            if (storedValue !== null) {
+                time = parseInt(storedValue);
+                updateTimerDisplay();
+                updateTitle(time);
+            } else {
+                time = 1500; // Default value if no stored value exists
+            }
+        }
+
+        // Save the timer value to Local Storage
+        function saveTimerValue() {
+            localStorage.setItem("timerValue", time);
+        }
 
         // Start button click event
         const startButton = document.getElementById("startButton");
@@ -109,12 +125,14 @@
                 isRunning = false;
                 startButton.textContent = "Resume";
             }
+            saveTimerValue(); // Save the timer value to Local Storage
         });
 
         // Reset button click event
         const resetButton = document.getElementById("resetButton");
         resetButton.addEventListener("click", () => {
             resetTimer();
+            saveTimerValue(); // Save the timer value to Local Storage
         });
 
         // Break buttons click events
@@ -234,6 +252,9 @@
             audio.currentTime = 0;
             audio.play();
         }
+
+        // On page load, retrieve the timer value from Local Storage
+        document.addEventListener("DOMContentLoaded", retrieveTimerValue);
     </script>
 </body>
 </html>

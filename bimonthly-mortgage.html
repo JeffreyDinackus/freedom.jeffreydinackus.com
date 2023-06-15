@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bimonthly Mortgage Payment Calculator</title>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 40px auto;
+        }
+
+        .form-group {
+            margin-top: 20px;
+        }
+
+        .form-input {
+            width: 100%;
+        }
+
+        .btn {
+            margin: 10px;
+        }
+
+        .result {
+            margin-top: 40px;
+        }
+
+        .amortization {
+            margin-top: 40px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bimonthly Mortgage Payment Calculator</h1>
+        <div class="form-group">
+            <label for="principal">Principal loan balance:</label>
+            <input type="number" id="principal" class="form-input" placeholder="Enter principal balance" required>
+        </div>
+        <div class="form-group">
+            <label for="interest">Annual interest rate:</label>
+            <input type="number" id="interest" class="form-input" placeholder="Enter interest rate" required>
+        </div>
+        <div class="form-group">
+            <label for="amortization">Amortization length (years):</label>
+            <input type="number" id="amortization" class="form-input" placeholder="Enter amortization length" required>
+        </div>
+        <div class="form-group">
+            <button id="calculateButton" class="btn btn-primary">CALCULATE</button>
+        </div>
+        <div class="result">
+            <h2>Results:</h2>
+            <div id="monthlyPayment"></div>
+            <div id="monthlyInterest"></div>
+            <div id="biweeklyPayment"></div>
+            <div id="biweeklyInterest"></div>
+        </div>
+        <div class="amortization">
+            <h2>Amortization Table:</h2>
+            <table id="amortizationTable" class="table"></table>
+        </div>
+    </div>
+    <script>
+        // Calculate bimonthly mortgage payment
+        function calculateBimonthlyPayment(principal, interestRate, amortizationYears) {
+            const monthlyInterestRate = interestRate / 1200;
+            const totalPayments = amortizationYears * 12;
+            const monthlyPayment = (principal * monthlyInterestRate) / (1 - Math.pow(1 + monthlyInterestRate, -totalPayments));
+            const biweeklyPayment = monthlyPayment / 2;
+            return {
+                monthlyPayment,
+                biweeklyPayment
+            };
+        }
+
+        // Calculate total interest paid
+        function calculateTotalInterest(principal, interestRate, amortizationYears, paymentFrequency) {
+            const monthlyInterestRate = interestRate / 1200;
+            const totalPayments = amortizationYears * 12;
+            const paymentPerPeriod = paymentFrequency === 'monthly' ? 1 : 2;
+            const interestPerPeriod = principal * monthlyInterestRate * paymentPerPeriod;
+            const totalInterest = interestPerPeriod * totalPayments / paymentPerPeriod;
+            return totalInterest.toFixed(2);
+        }
+
+        // Display results
+        function displayResults(monthlyPayment, biweeklyPayment, totalInterestMonthly, totalInterestBiweekly) {
+            document.getElementById("monthlyPayment").textContent = `Monthly Payment: $${monthlyPayment.toFixed(2)}`;
+            document.getElementById("monthlyInterest").textContent = `Total Interest (Monthly): $${totalInterestMonthly}`;
+            document.getElementById("biweeklyPayment").textContent = `Biweekly Payment: $${biweeklyPayment.toFixed(2)}`;
+            document.getElementById("biweeklyInterest").textContent = `Total Interest (Biweekly): $${totalInterestBiweekly}`;
+        }
+
+        // Display amortization table
+        function displayAmortizationTable(principal, interestRate, amortizationYears, paymentFrequency) {
+            const monthlyInterestRate = interestRate / 1200;
+            const totalPayments = amortizationYears * 12;
+            const paymentPerPeriod = paymentFrequency === 'monthly' ? 1 : 2;
+            const interestPerPeriod = principal * monthlyInterestRate * paymentPerPeriod;
+            const amortizationTable = document.getElementById("amortizationTable");
+            amortizationTable.innerHTML = "<thead><tr><th>Payment Number</th><th>Payment Amount</th><th>Principal</th><th>Interest</th><th>Remaining Balance</th></tr></thead><tbody>";
+            let balance = principal;
+            for (let i = 1; i <= totalPayments; i++) {
+                const paymentAmount = paymentFrequency === 'monthly' ? principal * (monthlyInterestRate / (1 - Math.pow(1 + monthlyInterestRate, -totalPayments))) : principal * (monthlyInterestRate * paymentPerPeriod) / (1 - Math.pow(1 + monthlyInterestRate * paymentPerPeriod, -totalPayments / paymentPerPeriod));
+                const interestAmount = balance * monthlyInterestRate;
+                const principalAmount = paymentAmount - interestAmount;
+                balance -= principalAmount;
+                amortizationTable.innerHTML += `<tr><td>${i}</td><td>$${paymentAmount.toFixed(2)}</td><td>$${principalAmount.toFixed(2)}</td><td>$${interestAmount.toFixed(2)}</td><td>$${balance.toFixed(2)}</td></tr>`;
+            }
+            amortizationTable.innerHTML += "</tbody>";
+        }
+
+        // Calculate and display results on button click
+        document.getElementById("calculateButton").addEventListener("click", function () {
+            const principal = parseFloat(document.getElementById("principal").value);
+            const interestRate = parseFloat(document.getElementById("interest").value);
+            const amortizationYears = parseInt(document.getElementById("amortization").value);
+            const paymentFrequency = 'biweekly';
+
+            if (isNaN(principal) || isNaN(interestRate) || isNaN(amortizationYears)) {
+                alert("Please enter valid numeric values.");
+                return;
+            }
+
+            const { monthlyPayment, biweeklyPayment } = calculateBimonthlyPayment(principal, interestRate, amortizationYears);
+            const totalInterestMonthly = calculateTotalInterest(principal, interestRate, amortizationYears, 'monthly');
+            const totalInterestBiweekly = calculateTotalInterest(principal, interestRate, amortizationYears, 'biweekly');
+
+            displayResults(monthlyPayment, biweeklyPayment, totalInterestMonthly, totalInterestBiweekly);
+            displayAmortizationTable(principal, interestRate, amortizationYears, paymentFrequency);
+        });
+    </script>
+</body>
+</html>
