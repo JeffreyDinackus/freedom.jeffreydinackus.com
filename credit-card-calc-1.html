@@ -45,72 +45,72 @@
         }
     </style>
     <script>
-        function calculateSum(event) {
-            event.preventDefault(); // Prevent form submission
-            
-            var rows = Array.from(document.querySelectorAll('#data-table tbody tr')); // Get all table rows
-            
-            var magicNumbers = [];
-            
-            rows.forEach(function (row) {
-                var inputs = row.querySelectorAll('input[type="number"]'); // Get all input elements in each row
-                var resultCell = row.querySelector('.result'); // Get the result cell in each row
-                var magicNumberCell = row.querySelector('.magic-number'); // Get the magic number cell in each row
+function calculateSum(event) {
+    event.preventDefault(); // Prevent form submission
+    
+    var rows = Array.from(document.querySelectorAll('#data-table tbody tr')); // Get all table rows
+    
+    var magicNumbers = [];
+    
+    rows.forEach(function (row) {
+        var inputs = row.querySelectorAll('input[type="number"]'); // Get all input elements in each row
+        var resultCell = row.querySelector('.result'); // Get the result cell in each row
+        var magicNumberCell = row.querySelector('.magic-number'); // Get the magic number cell in each row
 
-                var name = row.querySelector('.name').value || 'N/A';
-                var outstandingBalance = parseFloat(inputs[0].value) || 0;
-                var minimumPayment = parseFloat(inputs[1].value) || 0;
-                
-                var magicNumber = outstandingBalance / minimumPayment;
-                magicNumberCell.textContent = magicNumber.toFixed(2); // Display the magic number in the magic number cell
-                
-                magicNumbers.push({ row, magicNumber, name });
-            });
+        var name = row.querySelector('.name').value || 'N/A';
+        var outstandingBalance = parseFloat(inputs[0].value) || 0;
+        var minimumPayment = parseFloat(inputs[1].value) || 0;
+        
+        var magicNumber = outstandingBalance / minimumPayment;
+        magicNumberCell.textContent = isNaN(magicNumber) ? '' : magicNumber.toFixed(2); // Display the magic number in the magic number cell
+        
+        magicNumbers.push({ row, magicNumber, name });
+    });
 
-            magicNumbers.sort(function (a, b) {
-                return a.magicNumber - b.magicNumber;
-            });
+    magicNumbers.sort(function (a, b) {
+        return a.magicNumber - b.magicNumber;
+    });
 
-            magicNumbers.forEach(function (item, index) {
-                var resultText = '';
-                switch (index) {
-                    case 0:
-                        resultText = 'First';
-                        break;
-                    case 1:
-                        resultText = 'Second';
-                        break;
-                    case 2:
-                        resultText = 'Third';
-                        break;
-                    case 3:
-                        resultText = 'Fourth';
-                        break;
-                    case 4:
-                        resultText = 'Fifth';
-                        break;
-                    case 5:
-                        resultText = 'Sixth';
-                        break;
-                    case 6:
-                        resultText = 'Seventh';
-                        break;
-                    case 7:
-                        resultText = 'Eighth';
-                        break;
-                    case 8:
-                        resultText = 'Ninth';
-                        break;
-                    case 9:
-                        resultText = 'Tenth';
-                        break;
-                    default:
-                        resultText = (index + 1) + 'th';
-                        break;
-                }
-                item.row.querySelector('.result').textContent = resultText;
-            });
+    magicNumbers.forEach(function (item, index) {
+        var resultText = '';
+        switch (index) {
+            case 0:
+                resultText = 'First';
+                break;
+            case 1:
+                resultText = 'Second';
+                break;
+            case 2:
+                resultText = 'Third';
+                break;
+            case 3:
+                resultText = 'Fourth';
+                break;
+            case 4:
+                resultText = 'Fifth';
+                break;
+            case 5:
+                resultText = 'Sixth';
+                break;
+            case 6:
+                resultText = 'Seventh';
+                break;
+            case 7:
+                resultText = 'Eighth';
+                break;
+            case 8:
+                resultText = 'Ninth';
+                break;
+            case 9:
+                resultText = 'Tenth';
+                break;
+            default:
+                resultText = (index + 1) + 'th';
+                break;
         }
+        item.row.querySelector('.result').textContent = resultText;
+    });
+}
     </script>
 </head>
 <body>
@@ -121,7 +121,7 @@
             <table class="table" id="data-table">
                 <thead>
                     <tr>
-                        <th>Account</th>
+                        <th>Account Name</th>
                         <th>Outstanding Balance</th>
                         <th>Minimum Monthly Payment</th>
                         <th>Magic Number</th>

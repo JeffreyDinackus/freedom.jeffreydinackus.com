@@ -1,5 +1,3 @@
-//start of timer stuff
-
 // Timer variables
 let time = 1500; // 25 minutes in seconds
 let timerId;
@@ -36,17 +34,53 @@ resetButton.addEventListener("click", () => {
 // Break buttons click events
 const breakButton5 = document.getElementById("breakButton5");
 breakButton5.addEventListener("click", () => {
-    startBreak(5);
+    if (!isRunning) {
+        startBreak(5);
+    } else {
+        pauseTimer();
+        startBreak(5);
+    }
 });
 
 const breakButton10 = document.getElementById("breakButton10");
 breakButton10.addEventListener("click", () => {
-    startBreak(10);
+    if (!isRunning) {
+        startBreak(10);
+    } else {
+        pauseTimer();
+        startBreak(10);
+    }
 });
 
 const breakButton15 = document.getElementById("breakButton15");
 breakButton15.addEventListener("click", () => {
-    startBreak(15);
+    if (!isRunning) {
+        startBreak(15);
+    } else {
+        pauseTimer();
+        startBreak(15);
+    }
+});
+
+// Work buttons click events
+const workButton20 = document.getElementById("workButton20");
+workButton20.addEventListener("click", () => {
+    if (!isRunning) {
+        startWork(20);
+    } else {
+        pauseTimer();
+        startWork(20);
+    }
+});
+
+const workButton25 = document.getElementById("workButton25");
+workButton25.addEventListener("click", () => {
+    if (!isRunning) {
+        startWork(25);
+    } else {
+        pauseTimer();
+        startWork(25);
+    }
 });
 
 // Timer logic
@@ -67,6 +101,15 @@ function startTimer() {
 }
 
 function startBreak(duration) {
+    time = duration * 60;
+    updateTimerDisplay();
+    updateTitle(time);
+    startTimer();
+    isRunning = true;
+    startButton.textContent = "Pause";
+}
+
+function startWork(duration) {
     time = duration * 60;
     updateTimerDisplay();
     updateTitle(time);
@@ -104,5 +147,3 @@ function playSound() {
     const audio = document.getElementById("completionSound");
     audio.play();
 }
-
-//end of timer stuff
