@@ -38,18 +38,16 @@
     <div class="container">
         <h1>Savings Calculator</h1>
         <div class="form-group">
-            <label for="inputSpendingRate">Spending Rate (as a % of your total income, example: 85%):</label>
-            <input type="number" id="inputSpendingRate" class="form-input" placeholder="Enter spending rate">
-        </div>
-        <div class="form-group">
-            <label for="inputSavingsRate">Savings Rate (as a % of your total income, example: 15%):</label>
+            <label for="inputSavingsRate">Savings Rate as a percentage of your total income:</label>
             <input type="number" id="inputSavingsRate" class="form-input" placeholder="Enter savings rate">
         </div>
-        <p>The two numbers above should equal 100% (all of your income).</p>
+        <p>The savings rate should be less than 100%.</p>
         <div class="form-group">
             <button id="calculateButton" class="btn btn-primary">Calculate</button>
         </div>
         <div id="result" class="form-group"></div> <!-- Result element -->
+        <div id="result2" class="form-group"></div> <!-- Result2 element -->
+
         <div class="form-group">
             <h6><a href="index.html">Click here to go back to the home page</a></h6>
         </div>
@@ -61,20 +59,25 @@
     <script>
         const calculateButton = document.getElementById("calculateButton");
         calculateButton.addEventListener("click", () => {
-            const spendingRate = parseFloat(document.getElementById("inputSpendingRate").value);
             const savingsRate = parseFloat(document.getElementById("inputSavingsRate").value);
             const resultElement = document.getElementById("result");
+            const resultElement2 = document.getElementById("result2");
 
-            if (isNaN(spendingRate) || isNaN(savingsRate)) {
-                resultElement.textContent = "Please enter valid numbers for spending rate and savings rate.";
+            
+            if (isNaN(savingsRate)) {
+                resultElement.textContent = "Please enter a valid number for the savings rate.";
                 return;
             }
-            if (spendingRate == 100){
-                resultElement.textContent = "If the spending rate is 100, you will never have enough to save 1 month of expenses.";
+
+            if (savingsRate >= 100) {
+                resultElement.textContent = "The savings rate should be less than 100%.";
                 return;
             }
+
+            const spendingRate = 100 - savingsRate;
             const months = spendingRate / savingsRate;
             resultElement.textContent = `It will take approximately ${months.toFixed(2)} months to save up 1 month of normal spending.`;
+            resultElement2.textContent = `Your spending rate is ${spendingRate.toFixed(2)}% of your total income.`;
         });
     </script>
 </body>
