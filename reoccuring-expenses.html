@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rule of 752 Calculator</title>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: #fff;
+            padding-top: 40px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-input {
+            width: 100%;
+        }
+
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Rule of 752 Calculator</h1>
+        <p>This calculator uses the rule of 752 for weekly expenses and rule of 153 for monthly expenses. It is a very rough calculator. As always the calculators are for illustrative purposes only. </p>
+        <div class="form-group">
+            <label for="expense">Weekly Expense ($):</label>
+            <input type="number" id="expense" class="form-input" placeholder="Enter weekly expense">
+        </div>
+        <div class="form-group">
+            <label for="timePeriod">Rate of Return:</label>
+            <select id="timePeriod" class="form-input">
+                <option value="752">Rule of 752 (Weekly)</option>
+                <option value="173">Monthly (7% rate of return)</option>
+                <!--<option value="1">Yearly (7% rate of return)</option>-->
+            </select>
+        </div>
+        <button id="calculateButton" class="btn btn-primary">Calculate</button>
+        <div id="result" class="form-group"></div>
+    </div>
+
+    <script>
+        const calculateButton = document.getElementById('calculateButton');
+        calculateButton.addEventListener('click', calculateRuleOf752);
+
+        function calculateRuleOf752() {
+            const expense = parseFloat(document.getElementById('expense').value);
+            const timePeriod = parseFloat(document.getElementById('timePeriod').value);
+
+            if (isNaN(expense) || isNaN(timePeriod)) {
+                document.getElementById('result').innerHTML = '<p>Please enter valid numeric values.</p>';
+                return;
+            }
+
+            let returnAmount;
+            let contributionAmount;
+
+            // if (timePeriod === 1) {
+            //     // Yearly calculation
+            //     // returnAmount = expense * 1;
+            // } else 
+            if (timePeriod === 752) {
+                // Rule of 752 calculation
+                returnAmount = expense * 752;
+            } else {
+                // Monthly calculation
+                returnAmount = expense * 153;
+            }
+
+            const result = `
+                <p>Amount from Return: $${returnAmount.toFixed(2)}</p>
+            `;
+
+            document.getElementById('result').innerHTML = result;
+        }
+    </script>
+</body>
+</html>

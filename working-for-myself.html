@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Work and Income Calculator</title>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: #fff;
+            padding-top: 40px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-input {
+            width: 100%;
+        }
+
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Work and Income Calculator</h1>
+        <div class="form-group">
+            <label for="hoursWorked">Last week, I worked <input type="number" id="hoursWorked" class="form-input" placeholder="hours"></label>
+        </div>
+        <div class="form-group">
+            <label for="weeklyIncome">I earn $<input type="number" id="weeklyIncome" class="form-input" placeholder="weekly income"> a week before taxes.</label>
+        </div>
+        <div class="form-group">
+            <label for="retirementFund">I put $<input type="number" id="retirementFund" class="form-input" placeholder="amount"> in my retirement fund, investment account, or savings.</label>
+        </div>
+        <div class="form-group">
+            <label>Last week, I worked <span id="selfEmployedHours"></span> hours for myself.</label>
+        </div>
+        <button id="calculateButton" class="btn btn-primary">Calculate</button>
+        <div id="result" class="form-group"></div>
+    </div>
+
+    <script>
+        const calculateButton = document.getElementById('calculateButton');
+        calculateButton.addEventListener('click', calculateValues);
+
+        function calculateValues() {
+            const hoursWorked = parseFloat(document.getElementById('hoursWorked').value);
+            const weeklyIncome = parseFloat(document.getElementById('weeklyIncome').value);
+            const retirementFund = parseFloat(document.getElementById('retirementFund').value);
+
+            if (isNaN(hoursWorked) || isNaN(weeklyIncome) || isNaN(retirementFund)) {
+                document.getElementById('result').innerHTML = '<p>Please enter valid numeric values for all fields.</p>';
+                return;
+            }
+
+            const selfEmployedHours = (retirementFund / weeklyIncome) * hoursWorked;
+
+            document.getElementById('selfEmployedHours').textContent = selfEmployedHours.toFixed(2);
+
+            const result = `
+                <p>Last week, I worked ${hoursWorked} hours. I earn $${weeklyIncome} a week before taxes. I put $${retirementFund} in my retirement fund, investment account, or savings.</p>
+                <p>Last week, I worked ${selfEmployedHours.toFixed(2)} hours for myself.</p>
+            `;
+
+            document.getElementById('result').innerHTML = result;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Financial Calculators</title>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: #fff;
+            padding-top: 40px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-input {
+            width: 100%;
+        }
+
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <h1>Rule of 72 Calculator</h1>
+        <div class="form-group">
+            <label for="rateOfReturn">Rate of Return (%):</label>
+            <input type="number" id="rateOfReturn" class="form-input" placeholder="Enter rate of return">
+        </div>
+        <button id="calculateButton" class="btn btn-primary">Calculate</button>
+        <div id="result" class="form-group"></div>
+    </div>
+
+    <div class="container">
+        <h1>Rate of Return Calculator</h1>
+        <div class="form-group">
+            <label for="initialValue">Initial Value:</label>
+            <input type="number" id="initialValue" class="form-input" placeholder="Enter initial value">
+        </div>
+        <div class="form-group">
+            <label for="finalValue">Final Value:</label>
+            <input type="number" id="finalValue" class="form-input" placeholder="Enter final value">
+        </div>
+        <div class="form-group">
+            <label for="timePeriod">Time Period (years):</label>
+            <input type="number" id="timePeriod" class="form-input" placeholder="Enter time period">
+        </div>
+        <button id="calculateButton2" class="btn btn-primary">Calculate</button>
+        <div id="result2" class="form-group"></div>
+    </div>
+
+    <div class="container">
+        <h1>Custom Rate of Return Calculator</h1>
+        <div class="form-group">
+            <label for="customRateOfReturn">Rate of Return (%):</label>
+            <input type="number" id="customRateOfReturn" class="form-input" placeholder="Enter rate of return">
+        </div>
+        <div class="form-group">
+            <label for="customTimePeriod">Time Period (years):</label>
+            <input type="number" id="customTimePeriod" class="form-input" placeholder="Enter time period">
+        </div>
+        <button id="calculateButton3" class="btn btn-primary">Calculate</button>
+        <div id="result3" class="form-group"></div>
+    </div>
+        <div class="form-group">
+            <h6><a href="index.html">Click here to go back to the home page</a></h6>
+        </div>
+        <div class="form-group">
+            <h6><a href="index.html">Click here to go back to submit an improvement</a></h6>
+        </div>
+    <script>
+        const calculateButton = document.getElementById('calculateButton');
+        calculateButton.addEventListener('click', calculateRuleOf72);
+
+        function calculateRuleOf72() {
+            const rateOfReturn = parseFloat(document.getElementById('rateOfReturn').value);
+
+            if (isNaN(rateOfReturn)) {
+                document.getElementById('result').innerHTML = '<p>Please enter a valid numeric value for rate of return.</p>';
+                return;
+            }
+
+            const yearsToDouble = 72 / rateOfReturn;
+
+            const result = `
+                <p>Years to Double: ${yearsToDouble.toFixed(2)}</p>
+            `;
+
+            document.getElementById('result').innerHTML = result;
+        }
+
+        const calculateButton2 = document.getElementById('calculateButton2');
+        calculateButton2.addEventListener('click', calculateRateOfReturn);
+
+        function calculateRateOfReturn() {
+            const initialValue = parseFloat(document.getElementById('initialValue').value);
+            const finalValue = parseFloat(document.getElementById('finalValue').value);
+            const timePeriod = parseFloat(document.getElementById('timePeriod').value);
+
+            if (isNaN(initialValue) || isNaN(finalValue) || isNaN(timePeriod)) {
+                document.getElementById('result2').innerHTML = '<p>Please enter valid numeric values for initial value, final value, and time period.</p>';
+                return;
+            }
+
+            const rateOfReturn = ((finalValue / initialValue) ** (1 / timePeriod) - 1) * 100;
+
+            const result = `
+                <p>Rate of Return: ${rateOfReturn.toFixed(2)}%</p>
+            `;
+
+            document.getElementById('result2').innerHTML = result;
+        }
+
+        const calculateButton3 = document.getElementById('calculateButton3');
+        calculateButton3.addEventListener('click', calculateCustomRateOfReturn);
+
+        function calculateCustomRateOfReturn() {
+            const customRateOfReturn = parseFloat(document.getElementById('customRateOfReturn').value);
+            const customTimePeriod = parseFloat(document.getElementById('customTimePeriod').value);
+
+            if (isNaN(customRateOfReturn) || isNaN(customTimePeriod)) {
+                document.getElementById('result3').innerHTML = '<p>Please enter valid numeric values for rate of return and time period.</p>';
+                return;
+            }
+
+            const rateOfReturnPercentage = Math.pow((1 + customRateOfReturn / 100), customTimePeriod) - 1;
+            const timesDoubled = Math.log(1 + rateOfReturnPercentage) / Math.log(2);
+
+            const result = `
+                <p>Percentage Change over ${customTimePeriod} years: ${(rateOfReturnPercentage * 100).toFixed(2)}%</p>
+                <p>Times Doubled: ${timesDoubled.toFixed(2)}</p>
+            `;
+
+            document.getElementById('result3').innerHTML = result;
+        }
+    </script>
+</body>
+</html>
