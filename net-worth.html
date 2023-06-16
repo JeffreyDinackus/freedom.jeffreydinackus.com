@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Expense Ratio Calculator</title>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: #fff;
+            padding-top: 40px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-input {
+            width: 100%;
+        }
+
+        #chart-container {
+            margin-top: 40px;
+            max-height: 300px;
+        }
+
+        canvas {
+            height: 100% !important;
+            width: 100% !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Expense Ratio Calculator</h1>
+        <div class="form-group">
+            <label for="initialInvestment">Initial Investment:</label>
+            <input type="number" id="initialInvestment" class="form-input" placeholder="Enter initial investment">
+        </div>
+        <div class="form-group">
+            <label for="recurringInvestment">Recurring Investment:</label>
+            <input type="number" id="recurringInvestment" class="form-input" placeholder="Enter recurring investment">
+        </div>
+        <div class="form-group">
+            <label for="frequency">Recurring Investment Frequency:</label>
+            <select id="frequency" class="form-input">
+                <option value="monthly">Monthly</option>
+                <option value="weekly">Weekly</option>
+                <option value="yearly">Yearly</option>
+                <option value="daily">Daily</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="expenseRatio">Expense Ratio (%):</label>
+            <input type="number" step="0.001" id="expenseRatio" class="form-input" placeholder="Enter expense ratio">
+        </div>
+        <div class="form-group">
+            <label for="years">Number of Years:</label>
+            <input type="number" id="years" class="form-input" placeholder="Enter number of years">
+        </div>
+        <div class="form-group">
+            <label for="returnOnInvestment">Return on Investment (%):</label>
+            <input type="number" id="returnOnInvestment" class="form-input" placeholder="Enter return on investment">
+        </div>
+        <div class="form-group">
+            <label for="savingsAmount">Amount in Savings Account:</label>
+            <input type="number" id="savingsAmount" class="form-input" placeholder="Enter amount in savings account">
+        </div>
+        <div class="form-group">
+            <label for="savingsReturn">Expected Return for Savings Account (%):</label>
+            <input type="number" id="savingsReturn" class="form-input" placeholder="Enter expected return for savings account">
+        </div>
+        <div class="form-group">
+            <label for="savingsRecurringInvestment">Recurring Investment for Savings Account:</label>
+            <input type="number" id="savingsRecurringInvestment" class="form-input" placeholder="Enter recurring investment for savings account">
+        </div>
+        <div class="form-group">
+            <label for="savingsFrequency">Recurring Investment Frequency for Savings Account:</label>
+            <select id="savingsFrequency" class="form-input">
+                <option value="monthly">Monthly</option>
+                <option value="weekly">Weekly</option>
+                <option value="yearly">Yearly</option>
+                <option value="daily">Daily</option>
+            </select>
+        </div>
+        <button id="calculateButton" class="btn btn-primary">Calculate</button>
+        <div id="result" class="form-group"></div>
+        <div id="chart-container">
+            <canvas id="chart"></canvas>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+const calculateButton = document.getElementById('calculateButton');
+calculateButton.addEventListener('click', calculateExpenseRatio);
+
+function calculateExpenseRatio() {
+  const initialInvestment = parseFloat(document.getElementById('initialInvestment').value);
+  const recurringInvestment = parseFloat(document.getElementById('recurringInvestment').value);
+  const frequency = document.getElementById('frequency').value;
+  const expenseRatio = parseFloat(document.getElementById('expenseRatio').value) / 100;
+  const years = parseInt(document.getElementById('years').value);
+  const returnOnInvestment = parseFloat(document.getElementById('returnOnInvestment').value) / 100;
+  const savingsAmount = parseFloat(document.getElementById('savingsAmount').value);
+  const savingsReturn = parseFloat(document.getElementById('savingsReturn').value) / 100;
+  const savingsRecurringInvestment = parseFloat(document.getElementById('savingsRecurringInvestment').value);
+  const savingsFrequency = document.getElementById('savingsFrequency').value;
+
+  if (
+    isNaN(initialInvestment) ||
+    isNaN(recurringInvestment) ||
+    isNaN(years) ||
+    isNaN(returnOnInvestment) ||
+    isNaN(expenseRatio) ||
+    isNaN(savingsAmount) ||
+    isNaN(savingsReturn) ||
+    isNaN(savingsRecurringInvestment)
+  ) {
+    document.getElementById('result').innerHTML = '<p>Please enter valid numeric values.</p>';
+    return;
+  }
+
+  const investmentData = calculateInvestmentData(initialInvestment, recurringInvestment, frequency, years, returnOnInvestment, expenseRatio);
+  const savingsData = calculateInvestmentData(savingsAmount, savingsRecurringInvestment, savingsFrequency, years, savingsReturn, 0);
+  const netWorthData = calculateNetWorthData(investmentData, savingsData);
+
+  const totalInvestment = recurringInvestment * getFrequencyMultiplier(frequency) * years + initialInvestment;
+  const totalSavings = savingsRecurringInvestment * getFrequencyMultiplier(savingsFrequency) * years + savingsAmount;
+
+  const result = `
+    <p>Amount Put into Investments: $${totalInvestment}</p>
+    <p>Total Investment Value: $${investmentData[years - 1]}</p>
+    <p>Amount Put into Savings Account: $${totalSavings}</p>
+    <p>Total Savings Account Value: $${savingsData[years - 1]}</p>
+    <p>Total Net Worth after ${years} years: $${netWorthData[years - 1]}</p>
+  `;
+
+  document.getElementById('result').innerHTML = result;
+
+  drawChart(investmentData, savingsData, netWorthData);
+}
+
+function calculateInvestmentData(initialInvestment, recurringInvestment, frequency, years, returnOnInvestment, expenseRatio) {
+  const investmentData = [];
+  let currentInvestmentValue = initialInvestment;
+
+  for (let i = 0; i < years; i++) {
+    const totalInvestmentValue = currentInvestmentValue + recurringInvestment * getFrequencyMultiplier(frequency);
+    const investmentValueAfterExpense = totalInvestmentValue * (1 - expenseRatio);
+    investmentData.push(investmentValueAfterExpense);
+    currentInvestmentValue = investmentValueAfterExpense * (1 + returnOnInvestment);
+  }
+
+  return investmentData;
+}
+
+function calculateNetWorthData(investmentData, savingsData) {
+  const netWorthData = [];
+  const maxLength = Math.max(investmentData.length, savingsData.length);
+
+  for (let i = 0; i < maxLength; i++) {
+    const investmentValue = investmentData[i] || 0;
+    const savingsValue = savingsData[i] || 0;
+    netWorthData.push(investmentValue + savingsValue);
+  }
+
+  return netWorthData;
+}
+
+function getFrequencyMultiplier(frequency) {
+  switch (frequency) {
+    case 'monthly':
+      return 12;
+    case 'weekly':
+      return 52;
+    case 'yearly':
+      return 1;
+    case 'daily':
+      return 365;
+    default:
+      return 1;
+  }
+}
+
+function drawChart(investmentData, savingsData, netWorthData) {
+  const chartCanvas = document.getElementById('chart');
+  const ctx = chartCanvas.getContext('2d');
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: Array.from(Array(netWorthData.length).keys()),
+      datasets: [
+        {
+          label: 'Investment Value',
+          data: investmentData,
+          borderColor: 'rgba(255, 99, 132, 1)',
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          fill: false,
+          borderWidth: 1
+        },
+        {
+          label: 'Savings Account Value',
+          data: savingsData,
+          borderColor: 'rgba(54, 162, 235, 1)',
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          fill: false,
+          borderWidth: 1
+        },
+        {
+          label: 'Net Worth',
+          data: netWorthData,
+          borderColor: 'rgba(75, 192, 192, 1)',
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          fill: false,
+          borderWidth: 1
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+}
+    </script>
+</body>
+</html>
