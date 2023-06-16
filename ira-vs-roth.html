@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Traditional IRA vs Roth IRA Calculator</title>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+    <style>
+        body {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #fff;
+            margin-top: 40px;
+        }
+
+        label {
+            margin-top: 10px;
+        }
+
+        #result {
+            margin-top: 20px;
+        }
+
+        #chartContainer {
+            margin-top: 40px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Traditional IRA vs Roth IRA Calculator</h1>
+        <div class="form-group">
+            <label for="inputContribution">Annual Contribution:</label>
+            <input type="number" id="inputContribution" class="form-input" min="0" step="100" value="6000">
+        </div>
+        <div class="form-group">
+            <label for="inputYears">Years of Investment:</label>
+            <input type="number" id="inputYears" class="form-input" min="1" step="1" value="30">
+        </div>
+        <div class="form-group">
+            <label for="inputTaxRate">Tax Rate (%):</label>
+            <input type="number" id="inputTaxRate" class="form-input" min="0" step="1" value="25">
+        </div>
+        <div class="form-group">
+            <button id="calculateButton" class="btn btn-primary">Calculate</button>
+        </div>
+        <div id="result" class="form-group"></div>
+        <div id="chartContainer">
+            <canvas id="comparisonChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("calculateButton").addEventListener("click", function() {
+            var contribution = parseFloat(document.getElementById("inputContribution").value);
+            var years = parseInt(document.getElementById("inputYears").value);
+            var taxRate = parseFloat(document.getElementById("inputTaxRate").value) / 100;
+
+            if (isNaN(contribution) || isNaN(years) || isNaN(taxRate)) {
+                document.getElementById("result").textContent = "Please enter valid numeric values for all fields.";
+                return;
+            }
+
+            var traditionalIRA = calculateFutureValue(contribution, years, taxRate, true);
+            var rothIRA = calculateFutureValue(contribution, years, taxRate, false);
+
+            var resultElement = document.getElementById("result");
+            resultElement.innerHTML = "<h2>Comparison Results:</h2>";
+            resultElement.innerHTML += "<p>Traditional IRA: $" + traditionalIRA.toFixed(2) + "</p>";
+            resultElement.innerHTML += "<p>Roth IRA: $" + rothIRA.toFixed(2) + "</p>";
+
+            displayComparisonChart(contribution, years, traditionalIRA, rothIRA);
+        });
+
+        function calculateFutureValue(contribution, years, taxRate, isTraditional) {
+            var futureValue = 0;
+            var annualContribution = contribution;
+
+            for (var i = 0; i < years; i++) {
+                var annualGrowth = annualContribution * 0.06; // Assuming 6% annual return
+                var taxableAmount = isTraditional ? annualContribution : 0;
+                var taxSavings = taxableAmount * taxRate;
+                annualContribution = isTraditional ? (annualContribution - taxSavings) : annualContribution;
+                futureValue += annualContribution + annualGrowth;
+            }
+
+            return futureValue;
+        }
+
+        function displayComparisonChart(contribution, years, traditionalIRA, rothIRA) {
+            var yearLabels = Array.from({ length: years + 1 }, (_, i) => i);
+
+            var chartOptions = {
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: "Years",
+                            color: "#fff",
+                            font: {
+                                size: 14,
+                                weight: "bold"
+                            }
+                        },
+                        ticks: {
+                            color: "#fff",
+                            font: {
+                                size: 12,
+                                weight: "bold"
+                            }
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: "Account Value ($)",
+                            color: "#fff",
+                            font: {
+                                size: 14,
+                                weight: "bold"
+                            }
+                        },
+                        ticks: {
+                            color: "#fff",
+                            font: {
+                                size: 12,
+                                weight: "bold"
+                            },
+                            callback: function(value, index, values) {
+                                return "$" + value.toLocaleString();
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: "#fff"
+                        }
+                    }
+                }
+            };
+
+            var chartData = {
+                labels: yearLabels,
+                datasets: [{
+                    label: "Traditional IRA",
+                    data: new Array(years + 1).fill(traditionalIRA),
+                    fill: false,
+                    borderColor: "#ff0000"
+                }, {
+                    label: "Roth IRA",
+                    data: new Array(years + 1).fill(rothIRA),
+                    fill: false,
+                    borderColor: "#0000ff"
+                }]
+            };
+
+            var comparisonChart = new Chart(document.getElementById("comparisonChart"), {
+                type: "line",
+                data: chartData,
+                options: chartOptions
+            });
+        }
+    </script>
+</body>
+</html>

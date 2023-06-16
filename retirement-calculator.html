@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FI/RE Calculator</title>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <style>
+        body {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #fff;
+            margin-top: 40px;
+        }
+
+        .form-group {
+            margin-top: 20px;
+        }
+
+        .form-input {
+            width: 100%;
+        }
+
+        .btn {
+            margin: 10px;
+        }
+
+        #chartContainer {
+            margin-top: 40px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>FI/RE Calculator</h1>
+        <div class="form-group">
+            <label for="inputAge">Current Age:</label>
+            <input type="number" id="inputAge" class="form-input" placeholder="Enter current age">
+        </div>
+        <div class="form-group">
+            <label for="inputExpenses">Yearly Expenses:</label>
+            <input type="number" id="inputExpenses" class="form-input" placeholder="Enter yearly expenses">
+        </div>
+        <div class="form-group">
+            <label for="inputPortfolio">Investment Portfolio:</label>
+            <input type="number" id="inputPortfolio" class="form-input" placeholder="Enter investment portfolio">
+        </div>
+        <div class="form-group">
+            <label for="inputContribution">Yearly Contribution to Investment Portfolio:</label>
+            <input type="number" id="inputContribution" class="form-input" placeholder="Enter yearly contribution">
+        </div>
+        <div class="form-group">
+            <label for="inputReturn">Rate of Return (in decimal):</label>
+            <input type="number" step="0.01" id="inputReturn" class="form-input" placeholder="Enter rate of return">
+        </div>
+        <div class="form-group">
+            <label for="inputExpenseRatio">Expense Ratio (in decimal):</label>
+            <input type="number" step="0.01" id="inputExpenseRatio" class="form-input" placeholder="Enter expense ratio">
+        </div>
+        <div class="form-group">
+            <label for="inputRetirementExpenses">Expenses in Retirement:</label>
+            <input type="number" id="inputRetirementExpenses" class="form-input" placeholder="Enter expenses in retirement">
+        </div>
+        <div class="form-group">
+            <label for="inputFutureExpenses">One-Time Future Expenses:</label>
+            <input type="number" id="inputFutureExpenses" class="form-input" placeholder="Enter one-time future expenses">
+        </div>
+        <div class="form-group">
+            <label for="inputFutureIncome">Monthly Income in Retirement:</label>
+            <input type="number" id="inputFutureIncome" class="form-input" placeholder="Enter monthly income in retirement">
+        </div>
+        <div class="form-group">
+            <button id="calculateButton" class="btn btn-primary">Calculate</button>
+        </div>
+        <div id="result" class="form-group"></div> <!-- Result element -->
+        <div id="chartContainer">
+            <canvas id="netWorthChart"></canvas>
+        </div>
+    </div>
+
+<script>
+    document.getElementById("calculateButton").addEventListener("click", function() {
+        var currentAge = parseFloat(document.getElementById("inputAge").value);
+        var yearlyExpenses = parseFloat(document.getElementById("inputExpenses").value);
+        var investmentPortfolio = parseFloat(document.getElementById("inputPortfolio").value);
+        var yearlyContribution = parseFloat(document.getElementById("inputContribution").value);
+        var rateOfReturn = parseFloat(document.getElementById("inputReturn").value);
+        var expenseRatio = parseFloat(document.getElementById("inputExpenseRatio").value);
+        var retirementExpenses = parseFloat(document.getElementById("inputRetirementExpenses").value);
+        var futureExpenses = parseFloat(document.getElementById("inputFutureExpenses").value);
+        var futureIncome = parseFloat(document.getElementById("inputFutureIncome").value);
+        
+        var resultElement = document.getElementById("result");
+        var chartContainer = document.getElementById("netWorthChart");
+        
+        if (isNaN(currentAge) || isNaN(yearlyExpenses) || isNaN(investmentPortfolio) || isNaN(yearlyContribution) || isNaN(rateOfReturn) || isNaN(expenseRatio) || isNaN(retirementExpenses) || isNaN(futureExpenses) || isNaN(futureIncome)) {
+            resultElement.textContent = "Please enter valid numeric values for all fields.";
+            return;
+        }
+
+        var netWorthData = [];
+        var retirementAge = calculateRetirementAge();
+
+        for (var age = currentAge; age <= retirementAge; age++) {
+            var netWorth = calculateNetWorth(age, retirementAge, yearlyExpenses, investmentPortfolio, yearlyContribution, rateOfReturn, expenseRatio, futureIncome);
+            netWorthData.push(netWorth);
+        }
+
+        displayNetWorthChart(netWorthData, currentAge, retirementAge);
+
+        resultElement.innerHTML = "<p>FIRE Number (Assets needed to retire): $" + netWorthData[netWorthData.length - 1].toFixed(2) + "</p><p>FIRE Age (Age you can retire at): " + retirementAge + " years</p>";
+    });
+
+    function calculateRetirementAge() {
+        // Perform calculations here to determine the retirement age
+        // You can customize this logic based on your requirements
+        return 65;
+    }
+
+    function calculateNetWorth(age, retirementAge, yearlyExpenses, investmentPortfolio, yearlyContribution, rateOfReturn, expenseRatio, futureIncome) {
+        var netWorth = 0;
+
+        if (age < retirementAge) {
+            // Calculate net worth before retirement
+            netWorth += investmentPortfolio;
+            netWorth += yearlyContribution * (retirementAge - age);
+            netWorth += calculateInvestmentReturns(age, retirementAge, yearlyExpenses, investmentPortfolio, yearlyContribution, rateOfReturn, expenseRatio);
+        } else {
+            // Calculate net worth during retirement
+            netWorth += futureIncome * ((age - retirementAge) * 12);
+        }
+
+        return netWorth;
+    }
+
+    function calculateInvestmentReturns(age, retirementAge, yearlyExpenses, investmentPortfolio, yearlyContribution, rateOfReturn, expenseRatio) {
+        var investmentReturns = investmentPortfolio * rateOfReturn;
+        var annualExpenses = yearlyExpenses * (1 + expenseRatio);
+        var totalContributions = yearlyContribution * (retirementAge - age);
+        var totalExpenses = annualExpenses * (retirementAge - age);
+        var remainingInvestment = investmentPortfolio + totalContributions - totalExpenses;
+
+        for (var i = age; i < retirementAge; i++) {
+            remainingInvestment += yearlyContribution;
+            remainingInvestment += remainingInvestment * rateOfReturn;
+            remainingInvestment -= annualExpenses;
+            remainingInvestment -= remainingInvestment * expenseRatio;
+        }
+
+        return remainingInvestment - investmentPortfolio - totalContributions + totalExpenses + investmentReturns;
+    }
+
+    function displayNetWorthChart(data, currentAge, retirementAge) {
+        var ageLabels = [];
+        for (var i = currentAge; i <= retirementAge; i++) {
+            ageLabels.push(i.toString());
+        }
+
+        var chartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: "Age"
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: "Net Worth"
+                    },
+                    ticks: {
+                        callback: function(value, index, values) {
+                            return "$" + value.toLocaleString();
+                        }
+                    }
+                }
+            }
+        };
+
+        var chartData = {
+            labels: ageLabels,
+            datasets: [{
+                label: "Net Worth",
+                data: data,
+                fill: false,
+                borderColor: "#fff"
+            }]
+        };
+
+        var netWorthChart = new Chart(document.getElementById("netWorthChart"), {
+            type: "line",
+            data: chartData,
+            options: chartOptions
+        });
+    }
+</script>
+</body>
+</html>
