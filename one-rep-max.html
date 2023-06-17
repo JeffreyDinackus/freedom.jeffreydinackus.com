@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>One Rep Max Calculator</title>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: #fff;
+            padding-top: 40px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-input {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>One Rep Max Calculator</h1>
+        <p>Formula: Weight (of weights) * Reps * 0.0333 + Weight (of weights) = Estimated One Rep Max</p>
+        <p>Formula credit to Jim Wendler.</p>
+        <div class="form-group">
+            <label for="weight">Weight (of weights):</label>
+            <input type="number" id="weight" class="form-input" placeholder="Enter weight">
+        </div>
+        <div class="form-group">
+            <label for="reps">Reps:</label>
+            <input type="number" id="reps" class="form-input" placeholder="Enter reps">
+        </div>
+        <button id="calculateButton" class="btn btn-primary">Calculate</button>
+        <div id="result" class="form-group"></div>
+    </div>
+
+    <script>
+        const calculateButton = document.getElementById('calculateButton');
+        calculateButton.addEventListener('click', calculateOneRepMax);
+
+        const weightInput = document.getElementById('weight');
+        const repsInput = document.getElementById('reps');
+
+        weightInput.addEventListener('input', calculateOneRepMax);
+        repsInput.addEventListener('input', calculateOneRepMax);
+
+        function calculateOneRepMax() {
+            const weight = parseFloat(weightInput.value);
+            const reps = parseInt(repsInput.value);
+
+            if (isNaN(weight) || isNaN(reps)) {
+                return;
+            }
+
+            const oneRepMax = weight * reps * 0.0333 + weight;
+
+            const result = `
+                <p>Estimated One Rep Max: ${oneRepMax.toFixed(2)}</p>
+            `;
+
+            document.getElementById('result').innerHTML = result;
+        }
+    </script>
+</body>
+</html>

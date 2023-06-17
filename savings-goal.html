@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Saving Goal Calculator</title>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: #fff;
+            padding-top: 40px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-input {
+            width: 100%;
+        }
+
+        #chart-container {
+            margin-top: 40px;
+            max-height: 300px;
+        }
+
+        canvas {
+            height: 100% !important;
+            width: 100% !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Saving Goal Calculator</h1>
+        <div class="form-group">
+            <label for="currentAmount">Amount Currently Saved:</label>
+            <input type="number" id="currentAmount" class="form-input" placeholder="Enter amount currently saved">
+        </div>
+        <div class="form-group">
+            <label for="targetAmount">Target Amount:</label>
+            <input type="number" id="targetAmount" class="form-input" placeholder="Enter target amount">
+        </div>
+        <div class="form-group">
+            <label for="interestRate">Interest Rate Earned (%):</label>
+            <input type="number" id="interestRate" class="form-input" placeholder="Enter interest rate earned">
+        </div>
+        <div class="form-group">
+            <label for="timeFrame">Timeframe (in months):</label>
+            <input type="number" id="timeFrame" class="form-input" placeholder="Enter timeframe in months">
+        </div>
+        <button id="calculateButton" class="btn btn-primary">Calculate</button>
+        <div id="result" class="form-group"></div>
+        <div id="chart-container">
+            <canvas id="chart"></canvas>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const calculateButton = document.getElementById('calculateButton');
+        calculateButton.addEventListener('click', calculateSavingGoal);
+
+        const currentAmountInput = document.getElementById('currentAmount');
+        const targetAmountInput = document.getElementById('targetAmount');
+        const interestRateInput = document.getElementById('interestRate');
+        const timeframeInput = document.getElementById('timeFrame');
+
+        currentAmountInput.addEventListener('input', calculateSavingGoal);
+        targetAmountInput.addEventListener('input', calculateSavingGoal);
+        interestRateInput.addEventListener('input', calculateSavingGoal);
+        timeframeInput.addEventListener('input', calculateSavingGoal);
+
+        let chart = null;
+
+        function calculateSavingGoal() {
+            const currentAmount = parseFloat(currentAmountInput.value);
+            const targetAmount = parseFloat(targetAmountInput.value);
+            const interestRate = parseFloat(interestRateInput.value) / 100;
+            const timeframe = parseInt(timeframeInput.value);
+
+            if (
+                isNaN(currentAmount) ||
+                isNaN(targetAmount) ||
+                isNaN(interestRate) ||
+                isNaN(timeframe)
+            ) {
+                return;
+            }
+
+            const savingsNeeded = targetAmount - currentAmount;
+            const monthlySavings = savingsNeeded / timeframe;
+            const dailySavings = monthlySavings / 30;
+            const weeklySavings = monthlySavings / 4;
+
+            const result = `
+                <p>Savings Needed: $${savingsNeeded.toFixed(2)}</p>
+                <p>Monthly Savings: $${monthlySavings.toFixed(2)}</p>
+                <p>Weekly Savings: $${weeklySavings.toFixed(2)}</p>
+                <p>Daily Savings: $${dailySavings.toFixed(2)}</p>
+            `;
+
+            document.getElementById('result').innerHTML = result;
+  const labels = ['Current'];
+  const dataPoints = [];
+  const interestPoints = [];
+
+  let accumulatedInterest = 0;
+
+  for (let i = 1; i <= timeframe; i++) {
+    const interestEarned = (currentAmount + accumulatedInterest) * (interestRate / 12);
+    accumulatedInterest += interestEarned;
+    const savings = currentAmount + monthlySavings * i + accumulatedInterest;
+
+    if (i === timeframe) {
+      labels.push(`Month ${i}`);
+      dataPoints.push(targetAmount.toFixed(2));
+    } else {
+      labels.push(`Month ${i}`);
+      dataPoints.push(savings.toFixed(2));
+    }
+
+    interestPoints.push(interestEarned.toFixed(2));
+  }
+
+  labels.push('Target');
+            if (chart) {
+                chart.data.labels = labels;
+                chart.data.datasets[0].data = [currentAmount, ...dataPoints, targetAmount];
+                chart.data.datasets[1].data = [0, ...interestPoints, 0];
+                chart.update();
+            } else {
+                const ctx = document.getElementById('chart').getContext('2d');
+                chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Savings',
+                            data: [currentAmount, ...dataPoints, targetAmount],
+                            backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                            borderColor: 'rgba(0, 123, 255, 1)',
+                            borderWidth: 1
+                        }, {
+                            label: 'Interest',
+                            data: [0, ...interestPoints, 0],
+                            backgroundColor: 'rgba(255, 193, 7, 0.5)',
+                            borderColor: 'rgba(255, 193, 7, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            x: {
+                                display: true,
+                                title: {
+                                    display: true,
+                                    text: 'Time'
+                                }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                callback: function (value, index, values) {
+                                    return '$' + value;
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

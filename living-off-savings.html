@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Savings Longevity Calculator</title>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: #fff;
+            padding-top: 40px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-input {
+            width: 100%;
+        }
+
+        #result {
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>How long will your savings or investment portfolio last?</h1>
+        <h6>Assumptions:</h6>
+        <ul>
+            <li>You have no income in retirement.</li>
+            <li>This calculator shows infinite if your portfolio remains after 70 years.</li>
+            <li>this calculator needs to be tested for accuracy.</li>
+        </ul>
+        <div class="form-group">
+            <label for="totalAssets">Total Assets:</label>
+            <input type="number" id="totalAssets" class="form-input" placeholder="Enter total assets">
+        </div>
+        <div class="form-group">
+            <label for="rateOfReturn">Rate of Return (%):</label>
+            <input type="number" id="rateOfReturn" class="form-input" placeholder="Enter rate of return">
+        </div>
+        <div class="form-group">
+            <label for="yearlyExpenses">Yearly Expenses:</label>
+            <input type="number" id="yearlyExpenses" class="form-input" placeholder="Enter yearly expenses">
+        </div>
+        <button id="calculateButton" class="btn btn-primary">Calculate</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const calculateButton = document.getElementById('calculateButton');
+        calculateButton.addEventListener('click', calculateSavingsLongevity);
+
+        function calculateSavingsLongevity() {
+            const totalAssets = parseFloat(document.getElementById('totalAssets').value);
+            const rateOfReturn = parseFloat(document.getElementById('rateOfReturn').value) / 100;
+            const yearlyExpenses = parseFloat(document.getElementById('yearlyExpenses').value);
+
+            if (
+                isNaN(totalAssets) ||
+                isNaN(rateOfReturn) ||
+                isNaN(yearlyExpenses)
+            ) {
+                return;
+            }
+            console.log(totalAssets, rateOfReturn, yearlyExpenses)
+            let savings = totalAssets;
+            let years = 0;
+            let months = 0;
+
+            while (savings >= yearlyExpenses && years <= 70) {
+                savings = savings - yearlyExpenses + (savings * rateOfReturn);
+                years++;
+            }
+
+            if (years > 70) {
+                const result = `
+                    <p>Your savings will last indefinitely.</p>
+                    <p>Your withdrawal rate is ${(yearlyExpenses / totalAssets * 100).toFixed(2)}% based on your yearly expenses.</p>
+                `;
+                document.getElementById('result').innerHTML = result;
+                return;
+            }
+
+            months = Math.floor((savings / yearlyExpenses) * 12);
+
+            const result = `
+                <p>You can live off your savings for approximately:</p>
+                <h2>${years} years and ${months} months</h2>
+                <p>Your withdrawal rate is ${(yearlyExpenses / totalAssets * 100).toFixed(2)}% based on your yearly expenses.</p>
+            `;
+
+            document.getElementById('result').innerHTML = result;
+        }
+    </script>
+</body>
+</html>

@@ -38,15 +38,21 @@
     <div class="container">
         <h1>Rule of 752 Calculator</h1>
         <p>This calculator uses the rule of 752 for weekly expenses and rule of 153 for monthly expenses. It is a very rough calculator. As always the calculators are for illustrative purposes only. </p>
+        <h6>Assumptions:</h6>
+        <ul>
+            <li>The result is the reoccuring expense compounded at 7% per year over 10 years.</li>
+            <li>The weekly expense uses the 752 rule.</li>
+            <li>The monthly expense uses the 153 rule.</li>
+        </ul>
         <div class="form-group">
-            <label for="expense">Weekly Expense ($):</label>
+            <label for="expense">Expense ($):</label>
             <input type="number" id="expense" class="form-input" placeholder="Enter weekly expense">
         </div>
         <div class="form-group">
             <label for="timePeriod">Rate of Return:</label>
             <select id="timePeriod" class="form-input">
-                <option value="752">Rule of 752 (Weekly)</option>
-                <option value="173">Monthly (7% rate of return)</option>
+                <option value="752">Weekly Expense over 10 years</option>
+                <option value="173">Monthly Expense over 10 years</option>
                 <!--<option value="1">Yearly (7% rate of return)</option>-->
             </select>
         </div>

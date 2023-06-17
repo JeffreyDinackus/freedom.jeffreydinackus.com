@@ -36,7 +36,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Work and Income Calculator</h1>
+        <h1>How many hours per week do I work for myself? Instead of for my creditors, boss, etc.?</h1>
         <div class="form-group">
             <label for="hoursWorked">Last week, I worked <input type="number" id="hoursWorked" class="form-input" placeholder="hours"></label>
         </div>
@@ -49,8 +49,8 @@
         <div class="form-group">
             <label>Last week, I worked <span id="selfEmployedHours"></span> hours for myself.</label>
         </div>
+         <div id="result" class="form-group"></div>
         <button id="calculateButton" class="btn btn-primary">Calculate</button>
-        <div id="result" class="form-group"></div>
     </div>
 
     <script>
@@ -73,9 +73,8 @@
 
             const result = `
                 <p>Last week, I worked ${hoursWorked} hours. I earn $${weeklyIncome} a week before taxes. I put $${retirementFund} in my retirement fund, investment account, or savings.</p>
-                <p>Last week, I worked ${selfEmployedHours.toFixed(2)} hours for myself.</p>
             `;
-
+//<p>Last week, I worked ${selfEmployedHours.toFixed(2)} hours for myself.</p>
             document.getElementById('result').innerHTML = result;
         }
     </script>

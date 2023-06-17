@@ -204,7 +204,12 @@ function drawChart(investmentData, savingsData, netWorthData) {
   const chartCanvas = document.getElementById('chart');
   const ctx = chartCanvas.getContext('2d');
 
-  new Chart(ctx, {
+  // Destroy the previous chart instance if it exists
+  if (window.myChart) {
+    window.myChart.destroy();
+  }
+
+  window.myChart = new Chart(ctx, {
     type: 'line',
     data: {
       labels: Array.from(Array(netWorthData.length).keys()),
@@ -246,6 +251,7 @@ function drawChart(investmentData, savingsData, netWorthData) {
     }
   });
 }
+
     </script>
 </body>
 </html>
