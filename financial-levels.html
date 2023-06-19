@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Financial Levels Calculator</title>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <style>
+        body {
+            background-color: #333;
+            color: #fff;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-input {
+            width: 100%;
+        }
+
+        .result {
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Financial Levels Calculator</h1>
+        <p>This calculator is still a work in progress. Please contribute code on our github if you want to help.</p>
+        <div class="form-group">
+            <label class="form-label">Rate of Return (%):</label>
+            <input type="number" step="0.01" min="0" class="form-input" id="rate-of-return">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Monthly After-tax Income:</label>
+            <input type="number" step="0.01" min="0" class="form-input" id="monthly-income">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Savings Rate (%):</label>
+            <input type="number" step="0.01" min="0" max="100" class="form-input" id="savings-rate">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Current Savings:</label>
+            <input type="number" step="0.01" min="0" class="form-input" id="current-savings">
+        </div>
+        <button class="btn btn-primary" onclick="calculate()">Calculate</button>
+        <div id="result" class="result"></div>
+                <div class="form-group">
+            <h6><a href="index.html">Click here to go back to the home page</a></h6>
+        </div>
+        <div class="form-group">
+            <h6><a href="index.html">Click here to go back to submit an improvement</a></h6>
+        </div>
+    </div>
+
+    <script>
+        function calculate() {
+            const rateOfReturn = parseFloat(document.getElementById('rate-of-return').value);
+            const monthlyIncome = parseFloat(document.getElementById('monthly-income').value);
+            const savingsRate = parseFloat(document.getElementById('savings-rate').value);
+            const currentSavings = parseFloat(document.getElementById('current-savings').value);
+
+            const targetLevel = 7;
+            const monthlySavings = (monthlyIncome * (savingsRate / 100));
+            const targetSavings = (targetLevel - 1) * monthlyIncome;
+
+            let monthsNeeded = 0;
+            let totalSavings = currentSavings;
+
+            while (totalSavings < targetSavings) {
+                const monthlyInterest = (totalSavings * rateOfReturn) / 100;
+                totalSavings += monthlySavings + monthlyInterest;
+                monthsNeeded++;
+            }
+
+            const result = document.getElementById('result');
+            result.innerHTML = `<p>Time to reach the desired financial level: ${monthsNeeded} months.</p>
+                                <p>Amount of money to save to reach the financial level: $${(targetSavings - currentSavings).toFixed(2)}</p>`;
+        }
+    </script>
+</body>
+</html>
