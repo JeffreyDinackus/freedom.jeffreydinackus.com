@@ -53,22 +53,54 @@
     .italic-text {
       font-style: italic;
     }
+            /* Popup Container */
+        .popup-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background-color: #f44336;
+            color: #fff;
+            text-align: center;
+            z-index: 9999;
+            display: none;
+        }
+
+        /* Popup Content */
+        .popup-content {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        /* Close Button */
+        .popup-close {
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
   </style>
+      <script>
+        // Close the popup when the close button is clicked
+        function closePopup() {
+            document.getElementById('popup-container').style.display = 'none';
+        }
+    </script>
 </head>
 <body>
   <header class="navbar">
     <section class="navbar-section">
     <div class="container">
-      <a href="#" class="navbar-brand">The Freedom Project</a>
+      <a href="index.html" class="navbar-brand">The Freedom Project</a>
     </section>
     <section class="navbar-section">
-      <a href="#" class="btn btn btn-link">Contact</a>
+      <a href="https://github.com/JeffreyDinackus/JeffreyDinackus.com" class="btn btn btn-link">Contact</a>
     </section></div>
   </header>
   
   <div class="backdrop bg-primary">
-    <h1>Welcome to the Freedom Project</h1>
-    <p><span class="italic-text">Welcome Freedom Fighters, </span>You will find calculators to help you with your finances and making informed financial decisions.</p>
+    <h1>Welcome to the Freedom Project!</h1>
+    <p><span class="italic-text">Welcome Savers, </span>You will find calculators to help you with your finances and making informed financial decisions.</p>
   </div>
   
 <div class="container">
@@ -92,13 +124,16 @@
       <h5><a href="ira-vs-roth.html">Traditional IRA vs Roth Caclulator COMING SOON. Contribute code on our github.</a></h5>
       <h5>Roth Conversion Calculator COMING SOON. Contribute code on our github.</h5>
       <h5><a href="one-rep-max.html">One Rep Max Calculator</a></h5>
-      <h5><a href="living-off-savings.html">How long can I live off my savings / investments?</a></h5>
     </div>
     <div class="column col-4">
       <h5>Real Estate vs Stocks Calculator COMING SOON. Contribute code on our github.</h5>
       <h5><a href="reoccuring-expenses.html">Reoccuring expense calculator (rule of 752)</a></h5>
       <h5><a href="working-for-myself.html">How many hours per week do I work for myself?</a></h5>
       <h5><a href="savings-goal.html">Savings Goal Calculator, Down Payments, Appliances, Cars, College, Dream Goal, Any Large Purchase.</a></h5>
+      <h5>Inflation Calculator COMING SOON. Contribute code on our github.</h5>
+      <h5>Compound interest calculator COMING SOON. Contribute code on our github.</h5>
+      <h5><a href="living-off-savings.html">How long can I live off my savings / investments?</a></h5>
+
     </div>
 
 
@@ -109,21 +144,38 @@
   <div class="container">
     <div class="content">
       <h2>About</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dapibus risus eget felis dictum, a gravida nulla convallis. Morbi venenatis, lacus non ullamcorper mollis, nunc nunc malesuada mauris, non aliquam justo metus sed nunc.</p>
-      <p>Integer finibus risus id semper tincidunt. Nam sed vestibulum lectus. Nullam sagittis tellus eu nulla convallis commodo. In ut ex lobortis, pharetra ligula vel, dignissim purus.</p>
+      <p>This is a free and open source project. View code and contribute on our github page.</p>
+      <p>All calculators are for ILLUSTRATIVE purposes only. Do not expect returns to be identical to the results of the calculators on this website. You assume all risk by using this website. </p>
+      <p></p>
     </div>
   </div>
     <div class="container">
     <div class="content">
-    <h6>This is FREE AND OPEN SOURCE SOFTWARE (FOSS)</h6>
-    <h6><a href="">See our Github page for all code and formulas used on this website here.</a></h6>
-    <p><a href="">Submit a improvement here.</a></p>
+    <h2>Sayings of the wise:</h2>
+    <p>It is better not to make a vow than to make one and not fulfill it. Ecclesiates 5:5 NIV</p>    
+  </div>
+    <div class="container">
+    <div class="content">
+    <h2>This is FREE AND OPEN SOURCE SOFTWARE (FOSS)</h2>
+    <h6><a href="https://github.com/JeffreyDinackus/JeffreyDinackus.com">See our Github page for all code and formulas used on this website here.</a></h6>
+    <p><a href="https://github.com/JeffreyDinackus/JeffreyDinackus.com">Submit a improvement here.</a></p>
 </div></div>
-
+    <div id="popup-container" class="popup-container">
+        <div class="popup-content">
+            <p>This website involves financial calculations and projections. Please note that all calculations are estimates and subject to various factors and risks. Projects will be different than real returns. Consult with a fee only financial advisor.</p>
+        </div>
+        <div class="popup-close" onclick="closePopup()">Close</div>
+    </div>
   <footer class="footer">
     <div class="container">
-      <p>Contact the developer here</p>
+      <p><a href="https://github.com/JeffreyDinackus/JeffreyDinackus.com">Contact the developer here</a></p>
     </div>
   </footer>
+      <script>
+        // Display the popup on page load
+        window.addEventListener('load', function() {
+            document.getElementById('popup-container').style.display = 'block';
+        });
+    </script>
 </body>
 </html>
