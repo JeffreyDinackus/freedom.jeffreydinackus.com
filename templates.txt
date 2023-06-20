@@ -1,0 +1,22 @@
+# this is code that can be reused.
+
+Structure of index page columns section
+
+
+<div class="container">
+    <div class="content">
+    <h2>Productivity</h2>
+
+  <div class="columns">
+    <div class="column col-4">
+      <h5><a href="pomodoro.html">Pomodoro timer</a></h5>
+
+    </div>
+    <div class="column col-4">
+
+    </div>
+    <div class="column col-4">
+
+   </div>
+  </div>
+</div></div>
