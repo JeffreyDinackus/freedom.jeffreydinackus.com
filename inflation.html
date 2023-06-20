@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Inflation Calculator</title>
+<link rel="stylesheet" href="/Assets/spectre-0.5.9/dist/spectre.min.css">
+<link rel="stylesheet" href="/Assets/spectre-0.5.9/dist/spectre-icons.min.css">
+  <link rel="stylesheet" href="non-inline-styles.css">
+  <link rel="icon" type="image/x-icon" href="/Assets/Media/icon.android-chrome-192x192.png">
+
+</head>
+<body>
+  <div class="container">
+    <h1>Inflation Calculator</h1>
+    <p>This calculator needs to be tested, I could not find a comparable calculator online to compare the results with. </p>
+    <div class="form-group">
+      <label for="initial-amount">Initial Amount:</label>
+      <input type="number" id="initial-amount" step="any" placeholder="Enter initial amount">
+    </div>
+    <div class="form-group">
+      <label for="inflation-rate">Inflation Rate (%):</label>
+      <input type="number" id="inflation-rate" step="any" placeholder="Enter inflation rate">
+    </div>
+    <div class="form-group">
+      <label for="years">Number of Years:</label>
+      <input type="number" id="years" step="1" placeholder="Enter number of years">
+    </div>
+    <div class="form-group">
+      <label for="rate-of-return">Rate of Return (%):</label>
+      <input type="number" id="rate-of-return" step="any" value="0">
+    </div>
+    <div class="form-group">
+      <button id="calculate-btn" class="btn btn-primary">Calculate</button>
+    </div>
+      <div class="form-group">
+            <h6><a href="index.html">Click here to go back to the home page</a></h6>
+        </div>
+        <div class="form-group">
+            <h6><a href="https://github.com/JeffreyDinackus/JeffreyDinackus.com">Click here to go back to submit an improvement</a></h6>        </div>
+<div class="result" id="result"></div>
+<div class="result" id="new-total"></div>
+
+  </div>
+<script>
+document.getElementById('calculate-btn').addEventListener('click', function() {
+  let initialAmount = parseFloat(document.getElementById('initial-amount').value);
+  let inflationRate = parseFloat(document.getElementById('inflation-rate').value);
+  let years = parseInt(document.getElementById('years').value);
+  let rateOfReturn = parseFloat(document.getElementById('rate-of-return').value);
+
+  let futureValue = initialAmount * Math.pow(1 + (rateOfReturn / 100), years);
+  let adjustedFutureValue = futureValue / Math.pow(1 + (inflationRate / 100), years);
+
+  let gains = adjustedFutureValue - initialAmount;
+  let total = Math.max(0, adjustedFutureValue);
+
+  document.getElementById('result').textContent = 'Amount Gained/Lost After ' + years + ' Years: $' + gains.toFixed(2);
+  document.getElementById('new-total').textContent = 'New Total: $' + total.toFixed(2);
+});
+</script></body>
+</html>
