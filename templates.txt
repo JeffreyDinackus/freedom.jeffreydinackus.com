@@ -2,6 +2,7 @@
 
 Structure of index page columns section
 
+Three column
 
 <div class="container">
     <div class="content">
