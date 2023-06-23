@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+  <link rel="stylesheet" href="/Assets/spectre-0.5.9/dist/spectre.min.css">
+  <link rel="stylesheet" href="non-inline-styles.css">
+  <link rel="icon" type="image/x-icon" href="/Assets/Media/icon.android-chrome-192x192.png">
+<link rel="stylesheet" href="styles.css">
+
+  <style>
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>BMI Calculator (Feet and Inches)</h1>
+    <form id="ftInBmiForm">
+      <div class="form-group">
+        <label for="feet">Height (feet):</label>
+        <input type="number" id="feet" class="form-input">
+      </div>
+      <div class="form-group">
+        <label for="inches">Height (inches):</label>
+        <input type="number" id="inches" class="form-input">
+      </div>
+      <div class="form-group">
+        <label for="ftInWeight">Weight (lbs):</label>
+        <input type="number" id="ftInWeight" class="form-input">
+      </div>
+      <div class="form-group">
+        <button type="button" id="calculateFtInBtn" class="btn btn-error">Calculate BMI (ft/in)</button>
+      </div>
+    </form>
+    <div id="ftInResult"></div>
+      <h1>BMI Calculator (Centimeters)</h1>
+    <form id="cmBmiForm">
+      <div class="form-group">
+        <label for="cmHeight">Height (cm):</label>
+        <input type="number" id="cmHeight" class="form-input">
+      </div>
+      <div class="form-group">
+        <label for="cmWeight">Weight (kg):</label>
+        <input type="number" id="cmWeight" class="form-input">
+      </div>
+      <div class="form-group">
+        <button type="button" id="calculateCmBtn" class="btn btn-error">Calculate BMI (cm)</button>
+      </div>
+    </form>
+    <div id="cmResult"></div>
+      <div class="form-group">
+            <h6><a href="index.html">Click here to go back to the home page</a></h6>
+        </div>
+        <div class="form-group">
+            <h6><a href="https://github.com/JeffreyDinackus/JeffreyDinackus.com">Click here to go back to submit an improvement</a></h6>        </div></div>
+  <script>
+    function calculateCmBMI() {
+      const cmHeight = parseFloat(document.getElementById('cmHeight').value);
+      const cmWeight = parseFloat(document.getElementById('cmWeight').value);
+
+      if (isNaN(cmHeight) || isNaN(cmWeight)) {
+        showError('Please enter valid values for height and weight.');
+        return;
+      }
+
+      const bmi = cmWeight / Math.pow(cmHeight / 100, 2);
+
+      const cmResultElement = document.getElementById('cmResult');
+      cmResultElement.innerHTML = `BMI: ${bmi.toFixed(2)}`;
+    }
+
+    function calculateFtInBMI() {
+      const feet = parseFloat(document.getElementById('feet').value);
+      const inches = parseFloat(document.getElementById('inches').value);
+      const ftInWeight = parseFloat(document.getElementById('ftInWeight').value);
+
+      if (isNaN(feet) || isNaN(inches) || isNaN(ftInWeight)) {
+        showError('Please enter valid values for height and weight.');
+        return;
+      }
+
+      const totalInches = feet * 12 + inches;
+      const cmHeight = totalInches * 2.54;
+      const kgWeight = ftInWeight / 2.205;
+
+      const bmi = kgWeight / Math.pow(cmHeight / 100, 2);
+
+      const ftInResultElement = document.getElementById('ftInResult');
+      ftInResultElement.innerHTML = `BMI: ${bmi.toFixed(2)}`;
+    }
+
+    function showError(message) {
+      const errorElement = document.createElement('p');
+      errorElement.classList.add('error');
+      errorElement.textContent = message;
+
+      const cmFormElement = document.getElementById('cmBmiForm');
+      cmFormElement.appendChild(errorElement);
+
+      const ftInFormElement = document.getElementById('ftInBmiForm');
+      ftInFormElement.appendChild(errorElement.cloneNode(true));
+    }
+
+    document.getElementById('calculateCmBtn').addEventListener('click', calculateCmBMI);
+    document.getElementById('calculateFtInBtn').addEventListener('click', calculateFtInBMI);
+  </script>
+</body>
+</html>
