@@ -2,8 +2,8 @@
 <html>
 <head>
     <title>Rule of 752 Calculator</title>
-<link rel="stylesheet" href="/Assets/spectre-0.5.9/dist/spectre.min.css">
-<link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/Assets/spectre-0.5.9/dist/spectre.min.css">
+    <link rel="stylesheet" href="styles.css">
 
     <style>
         body {
@@ -35,15 +35,15 @@
             margin-top: 20px;
         }
     </style>
-<link rel="icon" type="image/x-icon" href="/Assets/Media/icon.android-chrome-192x192.png">
+    <link rel="icon" type="image/x-icon" href="/Assets/Media/icon.android-chrome-192x192.png">
 </head>
 <body>
     <div class="container">
         <h1>Rule of 752 Calculator</h1>
-        <p>This calculator uses the rule of 752 for weekly expenses and rule of 153 for monthly expenses. It is a very rough calculator. As always the calculators are for illustrative purposes only. </p>
+        <p>This calculator uses the rule of 752 for weekly expenses and rule of 153 for monthly expenses. It is a very rough calculator. As always the calculators are for illustrative purposes only.</p>
         <h6>Assumptions:</h6>
         <ul>
-            <li>The result is the reoccuring expense compounded at 7% per year over 10 years.</li>
+            <li>The result is the recurring expense compounded at 7% per year over 10 years.</li>
             <li>The weekly expense uses the 752 rule.</li>
             <li>The monthly expense uses the 153 rule.</li>
         </ul>
@@ -54,17 +54,19 @@
         <div class="form-group">
             <label for="timePeriod">Rate of Return:</label>
             <select id="timePeriod" class="form-input">
-                <option value="752">Weekly Expense over 10 years</option>
-                <option value="173">Monthly Expense over 10 years</option>
+                <option value="752">Weekly Expense over 10 years at 7%</option>
+                <option value="857">Weekly Expense over 10 years at 8%</option>
+                <option value="153">Monthly Expense over 10 years</option>
                 <!--<option value="1">Yearly (7% rate of return)</option>-->
             </select>
         </div>
         <button id="calculateButton" class="btn btn-error">Calculate</button>
-                        <div class="form-group">
+        <div class="form-group">
             <h6><a href="index.html">Click here to go back to the home page</a></h6>
         </div>
         <div class="form-group">
-            <h6><a href="https://github.com/JeffreyDinackus/JeffreyDinackus.com">Click here to go back to submit an improvement</a></h6>        </div>
+            <h6><a href="https://github.com/JeffreyDinackus/JeffreyDinackus.com">Click here to go back to submit an improvement</a></h6>
+        </div>
         <div id="result" class="form-group"></div>
     </div>
 
@@ -84,20 +86,28 @@
             let returnAmount;
             let contributionAmount;
 
-            // if (timePeriod === 1) {
-            //     // Yearly calculation
-            //     // returnAmount = expense * 1;
-            // } else 
             if (timePeriod === 752) {
                 // Rule of 752 calculation
                 returnAmount = expense * 752;
+            } else if (timePeriod === 857) {
+                // Rule of 857 calculation
+                returnAmount = expense * 857;
             } else {
                 // Monthly calculation
                 returnAmount = expense * 153;
             }
 
+            if (timePeriod == 752 || timePeriod == 857) {
+                // Weekly calculation
+                contributionAmount = expense * 52 * 10;
+            } else {
+                // Monthly calculation
+                contributionAmount = expense * 12 * 10;
+            }
+
             const result = `
-                <p>Amount from Return: $${returnAmount.toFixed(2)}</p>
+                <p>Amount from Total amount of money after 10 years: $${returnAmount.toFixed(2)}</p>
+                <p>Amount contributed by user: $${contributionAmount.toFixed(2)} </p>
             `;
 
             document.getElementById('result').innerHTML = result;
