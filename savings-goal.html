@@ -2,8 +2,8 @@
 <html>
 <head>
     <title>Saving Goal Calculator</title>
-<link rel="stylesheet" href="/Assets/spectre-0.5.9/dist/spectre.min.css">
-<link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/Assets/spectre-0.5.9/dist/spectre.min.css">
+    <link rel="stylesheet" href="styles.css">
 
     <style>
         body {
@@ -41,7 +41,7 @@
             width: 100% !important;
         }
     </style>
-<link rel="icon" type="image/x-icon" href="/Assets/Media/icon.android-chrome-192x192.png">
+    <link rel="icon" type="image/x-icon" href="/Assets/Media/icon.android-chrome-192x192.png">
 </head>
 <body>
     <div class="container">
@@ -55,15 +55,11 @@
             <input type="number" id="targetAmount" class="form-input" placeholder="Enter target amount">
         </div>
         <div class="form-group">
-            <label for="interestRate">Interest Rate Earned (%):</label>
-            <input type="number" id="interestRate" class="form-input" placeholder="Enter interest rate earned">
-        </div>
-        <div class="form-group">
             <label for="timeFrame">Timeframe (in months):</label>
             <input type="number" id="timeFrame" class="form-input" placeholder="Enter timeframe in months">
         </div>
         <button id="calculateButton" class="btn btn-error">Calculate</button>
-                        <div class="form-group">
+        <div class="form-group">
             <h6><a href="index.html">Click here to go back to the home page</a></h6>
         </div>
         <div class="form-group">
@@ -81,12 +77,10 @@
 
         const currentAmountInput = document.getElementById('currentAmount');
         const targetAmountInput = document.getElementById('targetAmount');
-        const interestRateInput = document.getElementById('interestRate');
         const timeframeInput = document.getElementById('timeFrame');
 
         currentAmountInput.addEventListener('input', calculateSavingGoal);
         targetAmountInput.addEventListener('input', calculateSavingGoal);
-        interestRateInput.addEventListener('input', calculateSavingGoal);
         timeframeInput.addEventListener('input', calculateSavingGoal);
 
         let chart = null;
@@ -94,13 +88,11 @@
         function calculateSavingGoal() {
             const currentAmount = parseFloat(currentAmountInput.value);
             const targetAmount = parseFloat(targetAmountInput.value);
-            const interestRate = parseFloat(interestRateInput.value) / 100;
             const timeframe = parseInt(timeframeInput.value);
 
             if (
                 isNaN(currentAmount) ||
                 isNaN(targetAmount) ||
-                isNaN(interestRate) ||
                 isNaN(timeframe)
             ) {
                 return;
@@ -119,33 +111,25 @@
             `;
 
             document.getElementById('result').innerHTML = result;
-  const labels = ['Current'];
-  const dataPoints = [];
-  const interestPoints = [];
 
-  let accumulatedInterest = 0;
+            const labels = ['Current'];
+            const dataPoints = [];
 
-  for (let i = 1; i <= timeframe; i++) {
-    const interestEarned = (currentAmount + accumulatedInterest) * (interestRate / 12);
-    accumulatedInterest += interestEarned;
-    const savings = currentAmount + monthlySavings * i + accumulatedInterest;
+            for (let i = 1; i <= timeframe; i++) {
+                const savings = currentAmount + monthlySavings * i;
+                if (i === timeframe) {
+                    labels.push(`Month ${i}`);
+                    dataPoints.push(targetAmount.toFixed(2));
+                } else {
+                    labels.push(`Month ${i}`);
+                    dataPoints.push(savings.toFixed(2));
+                }
+            }
 
-    if (i === timeframe) {
-      labels.push(`Month ${i}`);
-      dataPoints.push(targetAmount.toFixed(2));
-    } else {
-      labels.push(`Month ${i}`);
-      dataPoints.push(savings.toFixed(2));
-    }
-
-    interestPoints.push(interestEarned.toFixed(2));
-  }
-
-  labels.push('Target');
+            labels.push('Target');
             if (chart) {
                 chart.data.labels = labels;
                 chart.data.datasets[0].data = [currentAmount, ...dataPoints, targetAmount];
-                chart.data.datasets[1].data = [0, ...interestPoints, 0];
                 chart.update();
             } else {
                 const ctx = document.getElementById('chart').getContext('2d');
@@ -158,12 +142,6 @@
                             data: [currentAmount, ...dataPoints, targetAmount],
                             backgroundColor: 'rgba(0, 123, 255, 0.5)',
                             borderColor: 'rgba(0, 123, 255, 1)',
-                            borderWidth: 1
-                        }, {
-                            label: 'Interest',
-                            data: [0, ...interestPoints, 0],
-                            backgroundColor: 'rgba(255, 193, 7, 0.5)',
-                            borderColor: 'rgba(255, 193, 7, 1)',
                             borderWidth: 1
                         }]
                     },
