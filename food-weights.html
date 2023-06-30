@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="/Assets/spectre-0.5.9/dist/spectre.min.css">
+<link rel="stylesheet" href="/Assets/spectre-0.5.9/dist/spectre-icons.min.css">
+  <link rel="stylesheet" href="non-inline-styles.css">
+  <link rel="icon" type="image/x-icon" href="/Assets/Media/icon.android-chrome-192x192.png">
+<link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #fff;
+      padding: 20px;
+    }
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    .form-select {
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Ounce Conversion Calculator</h1>
+    <div class="form-group">
+      <label class="form-label">Enter the value:</label>
+      <input class="form-input" type="number" id="value-input" step="any" placeholder="Enter value">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Select unit:</label>
+      <select class="form-select" id="unit-select">
+        <option value="oz">Ounces (oz)</option>
+        <option value="g">Grams (g)</option>
+        <option value="mg">Miligrams (mg)</option>
+        <option value="lbs">Pounds (lbs)</option>
+      </select>
+    </div>
+    <h2>Converted Values:</h2>
+    <ul class="list">
+      <li><strong>Ounces (oz):</strong> <span id="oz-output"></span></li>
+      <li><strong>Grams (g):</strong> <span id="g-output"></span></li>
+      <li><strong>Milligrams (mg):</strong> <span id="mg-output"></span></li>
+      <li><strong>Pounds (lbs):</strong> <span id="lbs-output"></span></li>
+    </ul>
+    <button class="btn btn-error" onclick="convert()">Convert</button>
+  
+      <div class="form-group">
+            <h6><a href="index.html">Click here to go back to the home page</a></h6>
+        </div>
+        <div class="form-group">
+            <h6><a href="https://github.com/JeffreyDinackus/JeffreyDinackus.com">Click here to go back to submit an improvement</a></h6>
+            </div></div>
+  <script>
+    function convert() {
+      var value = parseFloat(document.getElementById("value-input").value);
+      var unit = document.getElementById("unit-select").value;
+      
+      var oz, grams, milligrams, pounds;
+      
+      if (unit === "oz") {
+        oz = value;
+        grams = value * 28.3495;
+        milligrams = grams * 1000;
+        pounds = value / 16;
+      } else if (unit === "g") {
+        grams = value;
+        oz = value / 28.3495;
+        milligrams = grams * 1000;
+        pounds = oz / 16;
+      } else if (unit === "mg") {
+        milligrams = value;
+        grams = value / 1000;
+        oz = grams / 28.3495;
+        pounds = oz / 16;
+      } else if (unit === "lbs") {
+        pounds = value;
+        oz = value * 16;
+        grams = oz * 28.3495;
+        milligrams = grams * 1000;
+      }
+      
+      document.getElementById("oz-output").textContent = oz.toFixed(2);
+      document.getElementById("g-output").textContent = grams.toFixed(2);
+      document.getElementById("mg-output").textContent = milligrams.toFixed(2);
+      document.getElementById("lbs-output").textContent = pounds.toFixed(2);
+    }
+  </script>
+</body>
+</html>
