@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Retirement Fund Calculator</title>
+  <link rel="stylesheet" href="/Assets/spectre-0.5.9/dist/spectre.min.css">
+  <link rel="stylesheet" href="/Assets/spectre-0.5.9/dist/spectre-icons.min.css">
+  <link rel="stylesheet" href="non-inline-styles.css">
+  <link rel="icon" type="image/x-icon" href="/Assets/Media/icon.android-chrome-192x192.png">
+  <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+  <div class="container">
+    <h1>Freedom Day Calculator</h1>
+    <p>Found in the book "Mortgage Free!" by Rob Roy, this is a visualization of how many days of each year you are working for a expense(such as taxes or housing).</p>
+    <p>in other words, imagine all of your earned income went towards a yearly expense at the beginning of the year. This helps you visualize the percentage of your total income you are paying.</p>
+    <p>Reccomended inputs are taxes and housing costs, but other costs like utilities or anything can be used as long as you know the yearly cost and your income. </p>
+    <div class="form-group">
+      <label for="expense-name">Expense Name: (optional) </label>
+      <input class="form-input" id="expense-name" step="any" placeholder="Enter expense name">
+    </div>
+
+    <div class="form-group">
+      <label for="yearly-expenses">Yearly Expense:</label>
+      <input type="number" class="form-input" id="yearly-expenses" step="any" placeholder="Enter yearly expenses">
+    </div>
+
+    <div class="form-group">
+      <label for="yearly-income">Yearly Income:</label>
+      <input type="number" class="form-input" id="yearly-income" step="any" placeholder="Enter yearly expenses">
+    </div>
+
+
+
+    <div class="form-group">
+      <button id="calculate-btn" class="btn btn-error">Calculate</button>
+    </div>
+    <div class="form-group">
+            <h6><a href="index.html">Click here to go back to the home page</a></h6>
+        </div>
+        <div class="form-group">
+            <h6><a href="https://github.com/JeffreyDinackus/JeffreyDinackus.com">Click here to go back to submit an improvement</a></h6>        </div>
+    <div class="result" id="result"></div>
+    <div class="result2" id="result2"></div>
+
+  </div>
+    <script>
+  document.getElementById('calculate-btn').addEventListener('click', function() {
+    let yearlyExpenses = parseFloat(document.getElementById('yearly-expenses').value);
+    let expenseName = document.getElementById('expense-name').value;
+
+    let yearlyIncome = parseFloat(document.getElementById('yearly-income').value);
+
+    let freedomDay = yearlyExpenses / yearlyIncome * 365;
+    let result;
+
+    if (expenseName !== "") {
+      result = 'You are working for ' + expenseName + ' for ' + freedomDay.toFixed(0) + ' days a year.';
+    } else {
+      result = 'You are working for this expense ' + freedomDay.toFixed(0) + ' days a year.';
+    }
+
+    document.getElementById('result').textContent = result;
+  
+
+freedomDate = dateFromDay(2023, freedomDay); // Pass year as the first argument
+
+function dateFromDay(year = 2023, day) {
+  var date = new Date(year, 0); // initialize a date in `year-01-01`
+  return new Date(date.setDate(day)); // add the number of days
+}
+
+let formattedFreedomDate = freedomDate.toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "long", day: "numeric" });
+
+result2 = 'Your freedom day is for 2023 is ' + formattedFreedomDate;
+
+  // Do something with the updated result, such as displaying it on the page or logging it
+  document.getElementById('result2').textContent = result2;
+
+});
+
+  </script>
+
+</body>
+</html>

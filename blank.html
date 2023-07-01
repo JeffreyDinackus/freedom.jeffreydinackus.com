@@ -16,8 +16,8 @@
     <p></p>
     <p></p>
     <div class="form-group">
-      <label for="yearly-expenses">Yearly Expenses:</label>
-      <input type="number" id="yearly-expenses" step="any" placeholder="Enter yearly expenses">
+      <label for="yearly-expenses" class="form-input">Yearly Expenses:</label>
+      <input type="number" id="yearly-expenses" class="form-input" step="any" placeholder="Enter yearly expenses">
     </div>
     <div class="form-group">
       <button id="calculate-btn" class="btn btn-error">Calculate</button>
@@ -32,8 +32,8 @@
 
   <script>
   document.getElementById('calculate-btn').addEventListener('click', function() {
-  var yearlyExpenses = parseFloat(document.getElementById('yearly-expenses').value);
-  var fundNeeded = yearlyExpenses * 25;
+  let yearlyExpenses = parseFloat(document.getElementById('yearly-expenses').value);
+  let fundNeeded = yearlyExpenses * 25;
 
   document.getElementById('result').textContent = 'Size of Fund Needed to Retire: $' + fundNeeded.toFixed(2);
 });</script>
