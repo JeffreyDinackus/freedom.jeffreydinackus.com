@@ -42,6 +42,10 @@
             background-color: #333;
             color: #fff;
         }
+
+        #alarm-sound {
+            color: black;
+        }
     </style>
 <link rel="icon" type="image/x-icon" href="/Assets/Media/icon.android-chrome-192x192.png">
 </head>
@@ -60,18 +64,29 @@
         <div class="form-group">
             <button id="workButton20" class="btn btn-success">20 Min Work</button>
             <button id="workButton25" class="btn btn-success">25 Min Work</button>
-            <button id="breakButton5" class="btn btn-success">5 Min Break</button>
-            <button id="breakButton10" class="btn btn-success">10 Min Break</button>
-            <button id="breakButton15" class="btn btn-success">15 Min Break</button>
-            <button id="test" onclick="playSound()" class="btn btn-success">Test alarm sound</button>
+            <button id="workButton30" class="btn btn-success">30 Min Work</button>
+            <button id="breakButton5" class="btn btn-primary">5 Min Break</button>
+            <button id="breakButton10" class="btn btn-primary">10 Min Break</button>
+            <button id="breakButton15" class="btn btn-primary">15 Min Break</button>
+
+            <button id="test" onclick="testSound()" class="btn btn-error">Test alarm sound</button>
+            <br>
+        <label for="alarm-sound">Alarm sound:</label>
+        <div class="form-group">
+        <select class="form-select" id="alarm-sound">
+            <option>Nice</option>
+            <option>Mean</option>
+        </select>
         </div>
+
         <div class="form-group">
             <h6><a href="index.html">Click here to go back to the home page</a></h6>
         </div>
         <div class="form-group">
             <h6><a href="https://github.com/JeffreyDinackus/JeffreyDinackus.com">Click here to go back to submit an improvement</a></h6>        </div>
     </div>
-    <audio id="completionSound" src="/Assets/sound.mp3"></audio>
+    <audio id="completionSound1" src="/Assets/sound1.mp3"></audio>
+    <audio id="completionSound2" src="/Assets/sound2.mp3"></audio>
     <script>
         // Check if the browser supports notifications
         if ("Notification" in window) {
@@ -190,6 +205,16 @@
             }
         });
 
+        const workButton30 = document.getElementById("workButton30");
+        workButton30.addEventListener("click", () => {
+            if (!isRunning) {
+                startWork(30);
+            } else {
+                pauseTimer();
+                startWork(30);
+            }
+        });
+
         // Timer logic
         function startTimer() {
             timerId = setInterval(() => {
@@ -202,7 +227,14 @@
                     timerElement.textContent = "Time's up!";
                     isRunning = false;
                     startButton.disabled = true;
-                    playSound();
+                    if (Notification.permission === "granted") {
+                        const notification = new Notification("Time's up!");
+                    }
+                    if (document.getElementById("alarm-sound").value === "Nice") {
+                        playSound();
+                    } else {
+                        playSound2();
+                    }
                 }
             }, 1000);
         }
@@ -252,10 +284,23 @@
         }
 
         function playSound() {
-            const audio = document.getElementById("completionSound");
+            const audio = document.getElementById("completionSound1");
             audio.currentTime = 0;
             audio.play();
         }
+        function playSound2() {
+            const audio = document.getElementById("completionSound2");
+            audio.currentTime = 0;
+            audio.play();
+        }
+        function testSound() {
+            if (document.getElementById("alarm-sound").value === "Nice") {
+                playSound();
+            } else {
+                playSound2();
+            }
+        }
+
 
         // On page load, retrieve the timer value from Local Storage
         document.addEventListener("DOMContentLoaded", retrieveTimerValue);
