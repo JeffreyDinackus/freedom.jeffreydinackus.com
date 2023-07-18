@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vitamin IU to mg/g Calculator</title>
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+    <style>
+        body {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .form-label {
+            color: #fff;
+        }
+
+        .form-select,
+        .form-input {
+            background-color: white;
+            color: black;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #555;
+            color: #fff;
+        }
+
+        .result p {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Vitamin IU to mg/g Calculator</h1>
+        <form>
+            <div class="form-group">
+                <label class="form-label">Select Vitamin:</label>
+                <select class="form-select" id="vitamin">
+                    <option value="A">Vitamin A</option>
+                    <option value="B6">Vitamin B6</option>
+                    <option value="B12">Vitamin B12</option>
+                    <option value="C">Vitamin C</option>
+                    <option value="D">Vitamin D</option>
+                    <option value="E">Vitamin E</option>
+                    <option value="Mg">Magnesium</option>
+                    <option value="K">Vitamin K</option>
+                    <option value="Zn">Zinc</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Enter Amount:</label>
+                <input class="form-input" type="number" step="any" id="amount" />
+            </div>
+
+            <button class="btn btn-primary" type="button" onclick="convert()">Convert</button>
+
+            <div class="form-group">
+                <label class="form-label">Enter Amount in mg:</label>
+                <input class="form-input" type="number" step="any" id="mgValue" />
+            </div>
+
+            <button class="btn btn-primary" type="button" onclick="convertToIU('mg')">Convert to IU</button>
+
+            <div class="form-group">
+                <label class="form-label">Enter Amount in g:</label>
+                <input class="form-input" type="number" step="any" id="gValue" />
+            </div>
+
+            <button class="btn btn-primary" type="button" onclick="convertToIU('g')">Convert to IU</button>
+
+            <div class="form-group">
+                <label class="form-label">Enter Amount in mcg:</label>
+                <input class="form-input" type="number" step="any" id="mcgValue" />
+            </div>
+
+            <button class="btn btn-primary" type="button" onclick="convertToIU('mcg')">Convert to IU</button>
+        </form>
+        <div class="result" id="resultDiv">
+            <p><span id="iuResult"></span></p>
+            <p><span id="mgResult"></span></p>
+            <p><span id="gResult"></span></p>
+            <p><span id="mcgResult"></span></p>
+        </div>
+    </div>
+
+    <script>
+        const conversion_factors = {
+            "A": { iuToMgG: [0.3 / 1000, 0.3], mgToIU: [1, 1], gToIU: [1, 1000], mcgToIU: [1 / 40, 1] },
+            "B6": { iuToMgG: [0.025 / 1000, 0.025], mgToIU: [1, 1], gToIU: [1, 1000], mcgToIU: [1 / 40, 1] },
+            "B12": { iuToMgG: [0.05 / 1000, 0.05], mgToIU: [1, 1], gToIU: [1, 1000], mcgToIU: [1 / 2.4, 1] },
+            "C": { iuToMgG: [0.05, 50], mgToIU: [1, 20], gToIU: [1, 20000], mcgToIU: [1 / 60, 1] },
+            "D": { iuToMgG: [0.025 / 1000, 0.025], mgToIU: [1, 1], gToIU: [1, 1000], mcgToIU: [1 / 40, 1] },
+            "E": { iuToMgG: [0.67, 670], mgToIU: [1, 1.49], gToIU: [1, 1490], mcgToIU: [1 / 22.5, 1] },
+            "Mg": { iuToMgG: [1, 1], mgToIU: [1, 1], gToIU: [1, 1000], mcgToIU: [1 / 40, 1] },
+            "K": { iuToMgG: [0.025 / 1000, 0.025], mgToIU: [1, 1], gToIU: [1, 1000], mcgToIU: [1, 1] },
+            "Zn": { iuToMgG: [1, 1], mgToIU: [1, 1], gToIU: [1, 1000], mcgToIU: [1, 1] },
+        };
+
+        function convert() {
+            const vitamin = document.getElementById("vitamin").value;
+            const amount = parseFloat(document.getElementById("amount").value);
+
+            const resultDiv = document.getElementById("resultDiv");
+            if (isNaN(amount)) {
+                resultDiv.textContent = "Please enter a valid number.";
+                return;
+            }
+            if (amount < 0) {
+                resultDiv.textContent = "Please enter a positive number.";
+                return;
+            }
+
+            const [mgToIUFactor, gToIUFactor, mcgToIUFactor] = conversion_factors[vitamin].mgToIU;
+            const [iuToMgFactor, iuToGFactor, iuToMcgFactor] = conversion_factors[vitamin].iuToMgG;
+
+            const mgValueFromIU = amount / mgToIUFactor;
+            const gValueFromIU = amount / gToIUFactor;
+            const mcgValueFromIU = amount / mcgToIUFactor;
+
+            resultDiv.innerHTML = `
+                <p>${amount} IU of Vitamin ${vitamin} is equal to:</p>
+                <p>${mgValueFromIU.toFixed(4)} mg</p>
+                <p>${gValueFromIU.toFixed(6)} g</p>
+                <p>${mcgValueFromIU.toFixed(4)} mcg</p>
+            `;
+        }
+
+        function convertToIU(unit) {
+            const vitamin = document.getElementById("vitamin").value;
+            let mgValue = null;
+            let gValue = null;
+            let mcgValue = null;
+
+            if (unit === "mg") {
+                mgValue = parseFloat(document.getElementById("mgValue").value);
+                if (isNaN(mgValue)) {
+                    alert("Please enter a valid number for mg.");
+                    return;
+                }
+            } else if (unit === "g") {
+                gValue = parseFloat(document.getElementById("gValue").value);
+                if (isNaN(gValue)) {
+                    alert("Please enter a valid number for g.");
+                    return;
+                }
+            } else if (unit === "mcg") {
+                mcgValue = parseFloat(document.getElementById("mcgValue").value);
+                if (isNaN(mcgValue)) {
+                    alert("Please enter a valid number for mcg.");
+                    return;
+                }
+            }
+
+            const resultDiv = document.getElementById("resultDiv");
+            resultDiv.innerHTML = "";
+
+            let iuValue = null;
+
+            if (unit === "mg") {
+                const [iuToMgFactor, ,] = conversion_factors[vitamin].iuToMgG;
+                iuValue = mgValue * iuToMgFactor;
+            } else if (unit === "g") {
+                const [, iuToGFactor,] = conversion_factors[vitamin].iuToMgG;
+                iuValue = gValue * iuToGFactor;
+            } else if (unit === "mcg") {
+                const [, , iuToMcgFactor] = conversion_factors[vitamin].iuToMgG;
+                iuValue = mcgValue * iuToMcgFactor;
+            }
+
+            resultDiv.innerHTML = `
+                <p>${unit === "mg" ? mgValue : unit === "g" ? gValue : mcgValue} ${unit} of Vitamin ${vitamin} is equal to:</p>
+                <p>${iuValue.toFixed(4)} IU</p>
+            `;
+        }
+    </script>
+</body>
+</html>
