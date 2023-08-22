@@ -1,256 +1,330 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>The Freedom Savers Foundation</title>
-<link rel="stylesheet" href="/Assets/spectre-0.5.9/dist/spectre.min.css">
-<link rel="stylesheet" href="/Assets/spectre-0.5.9/dist/spectre-icons.min.css">
-<link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="/Assets/spectre-0.5.9/dist/spectre.min.css">
+  <link rel="stylesheet" href="/Assets/spectre-0.5.9/dist/spectre-icons.min.css">
+  <link rel="stylesheet" href="styles.css">
 
 
   <style>
     /* Custom Styles */
     body {
-      background-color: #343a40; /* Dark background color */
-      color: #f8f9fa; /* Light text color */
+      background-color: #343a40;
+      /* Dark background color */
+      color: #f8f9fa;
+      /* Light text color */
     }
 
 
 
     .backdrop {
-      /*background-color: #212529; *//* Dark backdrop background color */
-      color: #f8f9fa; /* Light text color */
+      /*background-color: #212529; */
+      /* Dark backdrop background color */
+      color: #f8f9fa;
+      /* Light text color */
       padding: 40px;
       text-align: center;
       margin: 10px 0;
     }
-    
+
     .backdrop h1 {
       font-size: 36px;
     }
-    
+
     .content {
       margin: 40px 0;
       padding: 20px;
-      background-color: #454d55; /* Dark content background color */
+      background-color: #454d55;
+      /* Dark content background color */
       border-radius: 5px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      color: #f8f9fa; /* Light text color */
+      color: #f8f9fa;
+      /* Light text color */
     }
-    
+
     .navbar {
-      background-color: #343a40; /* Dark navbar background color */
-      color: #f8f9fa; /* Light text color */
+      background-color: #343a40;
+      /* Dark navbar background color */
+      color: #f8f9fa;
+      /* Light text color */
     }
-    
+
     .navbar a {
-      color: #f8f9fa; /* Light link color */
+      color: #f8f9fa;
+      /* Light link color */
       font-style: italic;
     }
 
 
-    
+
     .footer {
-      background-color: #343a40; /* Dark footer background color */
-      color: #f8f9fa; /* Light text color */
+      background-color: #343a40;
+      /* Dark footer background color */
+      color: #f8f9fa;
+      /* Light text color */
     }
+
     .italic-text {
       font-style: italic;
     }
-            /* Popup Container */
-        .popup-container {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 20px;
-            background-color: #f44336;
-            color: #fff;
-            text-align: center;
-            z-index: 9999;
-            display: none;
-        }
 
-        /* Popup Content */
-        .popup-content {
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
+    /* Popup Container */
+    .popup-container {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 20px;
+      background-color: #f44336;
+      color: #fff;
+      text-align: center;
+      z-index: 9999;
+      display: none;
+    }
 
-        /* Close Button */
-        .popup-close {
-            color: #fff;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        .blue {
-          color: #2196F3 !important;
-        }
+    /* Popup Content */
+    .popup-content {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    /* Close Button */
+    .popup-close {
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .blue {
+      color: #2196F3 !important;
+    }
   </style>
-      <script>
-        // Close the popup when the close button is clicked
-        function closePopup() {
-            document.getElementById('popup-container').style.display = 'none';
-        }
-    </script>
-    <link rel="icon" type="image/x-icon" href="/Assets/Media/icon.android-chrome-192x192.png">
+  <script>
+    // Close the popup when the close button is clicked
+    function closePopup() {
+      document.getElementById('popup-container').style.display = 'none';
+    }
+  </script>
+  <link rel="icon" type="image/x-icon" href="/Assets/Media/icon.android-chrome-192x192.png">
 
 </head>
+
 <body>
   <header class="navbar">
     <section class="navbar-section">
-    <div class="container">
-      <a href="index.html" class="navbar-brand">The Freedom Savers Foundation at JeffreyDinackus.com</a>
+      <div class="container">
+        <a href="index.html" class="navbar-brand">The Freedom Savers Foundation at JeffreyDinackus.com</a>
     </section>
     <section class="navbar-section">
       <a href="https://github.com/JeffreyDinackus/JeffreyDinackus.com" class="btn btn btn-link">Contact</a>
-    </section></div>
+    </section>
+    </div>
   </header>
-  
+
   <div class="backdrop bg-primary">
     <h1>Welcome to The Freedom Savers Foundation at JeffreyDinackus.com!</h1>
-    <p><span class="italic-text">Welcome Savers, </span>You will find calculators to help you with your finances and making informed financial decisions.</p>
+    <p><span class="italic-text">Welcome Savers, </span>You will find calculators to help you with your finances and
+      making informed financial decisions.</p>
   </div>
-  
-<div class="container">
+
+  <div class="container">
     <div class="content">
-    <h2>Personal Finance</h2>
+      <h2>Personal Finance</h2>
 
-  <div class="columns">
-    <div class="column col-4">
-      <h5><a href="credit-card-debt.html">Credit Card Debt Calculators</a></h5>
-      <!--<h5><a href="bimonthly-mortgage.html">Bimonthly Mortgage Caculator COMING SOON. Contribute code on our github.</a></h5>-->
-      <h5><a href="life.html">How many days or weeks do I have left to live? Calculator</a></h5>
-      <!--<h5><a href="retirement-calculator.html">Retirement or FI RE calculator COMING SOON. Contribute code on our github.</a></h5>-->
-      <h5><a href="save-1-month-of-expenses.html">How long will it take for me to save 1 month of expenses? Calculator</a></h5>
-      <!--<h5>Credit card points vs cashback vs invested returns COMING SOON. Contribute code on our github.</h5>-->
-      <!--<h5>Car miles per gallon cost comparison calculator</h5>-->
-      <h5><a href="freedom-day.html">NEW! Freedom Day Calculator</a></h5>
-    </div>
-    <div class="column col-4">
-      <h5><a href="net-worth.html">Net Worth with Expense Ratio Calculator</a></h5>
-      <h5><a href="rule-of-72.html">How fast will my money double calculator(rule of 72)</a></h5>
-      <!--<h5>Financial levels calculators 1 - 7 COMING SOON. Contribute code on our github.</h5>-->
-      <h5><a href="books.html">Reccomended Books</a></h5>      
-      <!--<h5><a href="ira-vs-roth.html">Traditional IRA vs Roth Caclulator COMING SOON. Contribute code on our github.</a></h5>-->
-      <!--<h5>Roth Conversion Calculator COMING SOON. Contribute code on our github.</h5>-->
-      <h5><a href="size-of-stash.html">How much money do I need to retire? </a></h5>
-      <!--<h5>Wedding cost calculator</h5>-->
-      <h5><a href="living-off-savings.html">How long can I live off my savings / investments?</a></h5>
-    </div>
-    <div class="column col-4">
-      <!--<h5>Real Estate vs Stocks Calculator COMING SOON. Contribute code on our github.</h5>-->
-      <h5><a href="reoccuring-expenses.html">Reoccuring expense calculator (rule of 752)</a></h5>
-      <h5><a href="working-for-myself.html">How many hours per week do I work for myself?</a></h5>
-      <h5><a href="savings-goal.html">Savings Goal Calculator, Down Payments, Appliances, Cars, College, Dream Goal, Any Large Purchase.</a></h5>
-      <h5><a href="inflation.html">Inflation Calculator</a></h5>
-      <!--<h5>Compound interest calculator COMING SOON. Contribute code on our github.</h5>-->
+      <div class="columns">
+        <div class="column col-4">
+          <h5><a href="credit-card-debt.html">Credit Card Debt Calculators</a></h5>
+          <!--<h5><a href="bimonthly-mortgage.html">Bimonthly Mortgage Caculator COMING SOON. Contribute code on our github.</a></h5>-->
+          <h5><a href="life.html">How many days or weeks do I have left to live? Calculator</a></h5>
+          <!--<h5><a href="retirement-calculator.html">Retirement or FI RE calculator COMING SOON. Contribute code on our github.</a></h5>-->
+          <h5><a href="save-1-month-of-expenses.html">How long will it take for me to save 1 month of expenses?
+              Calculator</a></h5>
+          <!--<h5>Credit card points vs cashback vs invested returns COMING SOON. Contribute code on our github.</h5>-->
+          <!--<h5>Car miles per gallon cost comparison calculator</h5>-->
+          <h5><a href="freedom-day.html">Freedom Day Calculator</a></h5>
+        </div>
+        <div class="column col-4">
+          <h5><a href="net-worth.html">Net Worth with Expense Ratio Calculator</a></h5>
+          <h5><a href="rule-of-72.html">How fast will my money double calculator(rule of 72)</a></h5>
+          <!--<h5>Financial levels calculators 1 - 7 COMING SOON. Contribute code on our github.</h5>-->
+          <h5><a href="books.html">Reccomended Books</a></h5>
+          <!--<h5><a href="ira-vs-roth.html">Traditional IRA vs Roth Caclulator COMING SOON. Contribute code on our github.</a></h5>-->
+          <!--<h5>Roth Conversion Calculator COMING SOON. Contribute code on our github.</h5>-->
+          <h5><a href="size-of-stash.html">How much money do I need to retire? </a></h5>
+          <!--<h5>Wedding cost calculator</h5>-->
+          <h5><a href="living-off-savings.html">How long can I live off my savings / investments?</a></h5>
+        </div>
+        <div class="column col-4">
+          <!--<h5>Real Estate vs Stocks Calculator COMING SOON. Contribute code on our github.</h5>-->
+          <h5><a href="reoccuring-expenses.html">Reoccuring expense calculator (rule of 752)</a></h5>
+          <h5><a href="working-for-myself.html">How many hours per week do I work for myself?</a></h5>
+          <h5><a href="savings-goal.html">Savings Goal Calculator, Down Payments, Appliances, Cars, College, Dream Goal,
+              Any Large Purchase.</a></h5>
+          <h5><a href="inflation.html">Inflation Calculator</a></h5>
+          <!--<h5>Compound interest calculator COMING SOON. Contribute code on our github.</h5>-->
 
+        </div>
+      </div>
     </div>
   </div>
-</div></div>
 
 
 
 
-<div class="container">
+  <div class="container">
     <div class="content">
-    <h2>Productivity</h2>
+      <h2>Productivity</h2>
 
-  <div class="columns">
-    <div class="column col-4">
-      <h5><a href="pomodoro.html">Pomodoro timer</a></h5>
+      <div class="columns">
+        <div class="column col-4">
+          <h5><a href="pomodoro.html">Pomodoro timer</a></h5>
 
+        </div>
+        <div class="column col-4">
+
+        </div>
+        <div class="column col-4">
+
+        </div>
+      </div>
     </div>
-    <div class="column col-4">
-
-    </div>
-    <div class="column col-4">
-
-   </div>
   </div>
-</div></div>
 
-
-<div class="container">
+  <div class="container">
     <div class="content">
-    <h2>Fitness</h2>
+      <h2>Productivity</h2>
 
-  <div class="columns">
-    <div class="column col-4">
-      <h5><a href="one-rep-max.html">One Rep Max Calculator</a></h5>
+      <div class="columns">
+        <div class="column col-4">
+          <h5><a href="pomodoro.html">Pomodoro timer</a></h5>
+
+        </div>
+        <div class="column col-4">
+
+        </div>
+        <div class="column col-4">
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="content">
+      <h2>Fitness</h2>
+
+      <div class="columns">
+        <div class="column col-4">
+          <h5><a href="one-rep-max.html">One Rep Max Calculator</a></h5>
+        </div>
+        <div class="column col-4">
+          <h5><a href="bmi.html">BMI &ndash; Body Mass Index Calculator</a></h5>
+
+        </div>
+        <div class="column col-4">
+          <h5><a href="food-weights.html">Food Weight Convertor grams, oz, mg, pounds.</a></h5>
+
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="content">
+          <h2>Credit Cards</h2>
+
+          <div class="columns">
+            <div class="column col-4">
+              <h5><a href="524calc.html">NEW! Chase 5/24 Calculator </a></h5>
+            </div>
+            <div class="column col-4">
+
+            </div>
+            <div class="column col-4">
+
+            </div>
           </div>
-    <div class="column col-4">
-      <h5><a href="bmi.html">BMI &ndash; Body Mass Index Calculator</a></h5>
-
+        </div>
+      </div>
     </div>
-    <div class="column col-4">
-      <h5><a href="food-weights.html">Food Weight Convertor grams, oz, mg, pounds.</a></h5>
-
-   </div>
   </div>
-</div></div>
 
-<div class="container">
+  <div class="container">
     <div class="content">
-    <h2>Technical Documentation on things besides technology</h2>
+      <h2>Technical Documentation on things besides technology</h2>
 
-  <div class="columns">
-    <div class="column col-4">
-      <h5><a href="#">Growing Tomatoes COMING SOON</a></h5>
+      <div class="columns">
+        <div class="column col-4">
+          <h5><a href="#">Growing Tomatoes COMING SOON</a></h5>
 
+        </div>
+        <div class="column col-4">
+
+        </div>
+        <div class="column col-4">
+
+        </div>
+      </div>
     </div>
-    <div class="column col-4">
-
-    </div>
-    <div class="column col-4">
-
-   </div>
   </div>
-</div></div>
 
   <div class="container">
     <div class="content">
       <h2 id="about">About</h2>
-      <p>This is a free and open source project. View code (including all formulas used!) and contribute on our github page.</p>
-      <p>All calculators are for ILLUSTRATIVE purposes only. Do not expect returns to be identical to the results of the calculators on this website. You assume all risk by using this website. </p>
-      <p>This website uses affiliate links, meaning that when you make a purchase, this website will recieve a little bit of the sale at no extra cost to you. The only page that features affiliate links is the books page. This money helps offset the cost of hosting and the domain names, and the developers time, and helps ensure you will recieve updates and more content. </p>
-      <p>By continuing to you agree to not hold any of the developers or the organization liable for any losses or damages that may occur from using this website. You agree to hold any developers and the organzation blameless. </p>
-      <p>This website uses cookies, however they are only used on the Pomodoro page. The cookies purpose is to save the time in the timer in case the browser crashes. No other cookies are used and the developer does not have access to them.</p>
+      <p>This is a free and open source project. View code (including all formulas used!) and contribute on our github
+        page.</p>
+      <p>All calculators are for ILLUSTRATIVE purposes only. Do not expect returns to be identical to the results of the
+        calculators on this website. You assume all risk by using this website. </p>
+      <p>This website uses affiliate links, meaning that when you make a purchase, this website will recieve a little
+        bit of the sale at no extra cost to you. The only page that features affiliate links is the books page. This
+        money helps offset the cost of hosting and the domain names, and the developers time, and helps ensure you will
+        recieve updates and more content. </p>
+      <p>By continuing to you agree to not hold any of the developers or the organization liable for any losses or
+        damages that may occur from using this website. You agree to hold any developers and the organzation blameless.
+      </p>
+      <p>This website uses cookies, however they are only used on the Pomodoro page. The cookies purpose is to save the
+        time in the timer in case the browser crashes. No other cookies are used and the developer does not have access
+        to them.</p>
     </div>
   </div>
-    <div class="container">
+  <div class="container">
     <div class="content">
-    <h2>Sayings of the wise:</h2>
-    <p>It is better not to make a vow than to make one and not fulfill it. Ecclesiates 5:5 NIV</p> 
-    <p>No one remembers the former generations,<br>
-    and even those yet to come<br>
-    will not be remembered<br>
-    by those who follow them. Ecclesiates 1:11 NIV</p>
-  </div>
+      <h2>Sayings of the wise:</h2>
+      <p>It is better not to make a vow than to make one and not fulfill it. Ecclesiates 5:5 NIV</p>
+      <p>No one remembers the former generations,<br>
+        and even those yet to come<br>
+        will not be remembered<br>
+        by those who follow them. Ecclesiates 1:11 NIV</p>
+    </div>
     <div class="container">
-    <div class="content">
-    <h2>This is FREE AND OPEN SOURCE SOFTWARE (FOSS)</h2>
-    <h6><a href="https://github.com/JeffreyDinackus/JeffreyDinackus.com">See our Github page for all code and formulas used on this website here.</a></h6>
-    <p><a href="https://github.com/JeffreyDinackus/JeffreyDinackus.com">Submit a improvement here.</a></p>
-</div></div>
+      <div class="content">
+        <h2>This is FREE AND OPEN SOURCE SOFTWARE (FOSS)</h2>
+        <h6><a href="https://github.com/JeffreyDinackus/JeffreyDinackus.com">See our Github page for all code and
+            formulas used on this website here.</a></h6>
+        <p><a href="https://github.com/JeffreyDinackus/JeffreyDinackus.com">Submit a improvement here.</a></p>
+      </div>
+    </div>
     <div id="popup-container" class="popup-container">
-        <div class="popup-content">
-            <p>This website involves financial calculations and projections. Please note that all calculations are estimates and subject to various factors and risks. Projections will be different than real returns. Consult with a fee only financial advisor. By continuing to use this website, you agree to all terms on our about page. <a class="blue "href="#about">Take me there</a>. This website also uses cookies.</p>
-        </div>
-        <div class="popup-close" onclick="closePopup()">Close</div>
+      <div class="popup-content">
+        <p>This website involves financial calculations and projections. Please note that all calculations are estimates
+          and subject to various factors and risks. Projections will be different than real returns. Consult with a fee
+          only financial advisor. By continuing to use this website, you agree to all terms on our about page. <a
+            class="blue " href="#about">Take me there</a>. This website also uses cookies.</p>
+      </div>
+      <div class="popup-close" onclick="closePopup()">Close</div>
     </div>
-  <footer class="footer">
-    <div class="container">
-      <p><a href="https://github.com/JeffreyDinackus/JeffreyDinackus.com">Contact the developer here</a></p>
-    </div>
-  </footer>
-      <script>
-        // Display the popup on page load
-        window.addEventListener('load', function() {
-            document.getElementById('popup-container').style.display = 'block';
-        });
+    <footer class="footer">
+      <div class="container">
+        <p><a href="https://github.com/JeffreyDinackus/JeffreyDinackus.com">Contact the developer here</a></p>
+      </div>
+    </footer>
+    <script>
+      // Display the popup on page load
+      window.addEventListener('load', function () {
+        document.getElementById('popup-container').style.display = 'block';
+      });
     </script>
 </body>
+
 </html>
