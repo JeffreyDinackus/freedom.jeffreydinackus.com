@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="library.css">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="library.css">
+</head>
+
+
+
+<nav class="navbar navbar-expand-lg  bg-danger">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">The Library</a>
+  </div>
+  </div>
+</nav>
+<div class="text-center">
+  <button onclick="openForm()" class="btn btn-danger mt-3">Add book</button>
+</div>
+
+<div id="popupContainer">
+  <div id="popupForm">
+    <div class="container">
+      <h2 class="my-3">Enter book details</h2>
+      <form id="myForm">
+        <!-- Your form fields go here -->
+        <br><label for="name">Title</label><br>
+        <input type="text" id="title" name="name" required><br>
+        <label for="name">Author's Name</label><br>
+        <input type="text" id="author" name="name" required><br>
+        <label for="name">Page Number</label><br>
+        <input type="number" id="pages" name="pages" required><br>
+        <label for="read">Have you read?</label>
+        <input type="checkbox" name="read" id="read">
+        <button type="submit">Submit</button><br>
+      </form>
+      <br><button onclick="closeForm()" id="closeFormButton">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="container text-center">
+  <div class="row align-items-start">
+    <div class="col">
+
+      <div class="container">
+        <div id="book1">
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 id="book1-title"></h5>
+              <p id="book1-author"></p>
+              <p id="book1-pages"></p>
+              <p id="book1-read"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div id="book4">
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 id="book4-title"></h5>
+              <p id="book4-author"></p>
+              <p id="book4-pages"></p>
+              <p id="book4-read"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div id="book7">
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 id="book7-title"></h5>
+              <p id="book7-author"></p>
+              <p id="book7-pages"></p>
+              <p id="book7-read"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+    </div>
+
+
+    <div class="col">
+
+
+
+      <div class="container">
+        <div id="book2">
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 id="book2-title"></h5>
+              <p id="book2-author"></p>
+              <p id="book2-pages"></p>
+              <p id="book2-read"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div id="book5">
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 id="book5-title"></h5>
+              <p id="book5-author"></p>
+              <p id="book5-pages"></p>
+              <p id="book5-read"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div id="book8">
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 id="book8-title"></h5>
+              <p id="book8-author"></p>
+              <p id="book8-pages"></p>
+              <p id="book8-read"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div id="book10">
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 id="book10-title"></h5>
+              <p id="book10-author"></p>
+              <p id="book10-pages"></p>
+              <p id="book10-read"></p>
+              <p>Note: This project supports up to 10 books</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="container">
+        <div id="book3">
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 id="book3-title"></h5>
+              <p id="book3-author"></p>
+              <p id="book3-pages"></p>
+              <p id="book3-read"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="container">
+        <div id="book6">
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 id="book6-title"></h5>
+              <p id="book6-author"></p>
+              <p id="book6-pages"></p>
+              <p id="book6-read"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div id="book9">
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 id="book9-title"></h5>
+              <p id="book9-author"></p>
+              <p id="book9-pages"></p>
+              <p id="book9-read"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+</div>
+
+<body>
+  <script src="library.js"></script>
+</body>
+
+</html>

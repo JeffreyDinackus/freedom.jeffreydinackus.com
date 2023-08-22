@@ -1,0 +1,67 @@
+#popupForm {
+  display: none;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  -ms-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  box-shadow: 5px 10px;
+  border-style: dotted;
+  border-color: red;
+  z-index: 999;
+  background-color: white;
+}
+
+input {
+  margin-left: 5px;
+  margin-bottom: 5px;
+}
+
+#book1 {
+  display: none;
+}
+
+#book2 {
+  display: none;
+}
+
+#book3 {
+  display: none;
+}
+
+#book4 {
+  display: none;
+}
+
+#book5 {
+  display: none;
+}
+
+#book6 {
+  display: none;
+}
+
+#book7 {
+  display: none;
+}
+
+#book8 {
+  display: none;
+}
+
+#book9 {
+  display: none;
+}
+
+#book10 {
+  display: none;
+}
+
+.card {
+  margin-top: 5px;
+}
