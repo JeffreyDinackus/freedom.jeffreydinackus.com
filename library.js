@@ -94,3 +94,13 @@ function openForm() {
 function closeForm() {
   document.getElementById("popupForm").style.display = "none";
 }
+
+function toggleRead(number) {
+  book = `book${number}-read`
+  bookLocation = document.getElementById(book)
+  if (bookLocation.textContent != "I have not read.") {
+    bookLocation.textContent = "I have not read."
+  } else {
+    bookLocation.textContent = "I have read."
+  }
+}
