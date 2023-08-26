@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="tictactoe.css">
+</head>
+
+<nav class="navbar bg-dark">
+  <form class="container-fluid justify-content-start">
+    <button class="btn btn-outline-success me-2" type="button">Tic Tac Toe</button>
+    <button class="btn btn-sm btn-outline-secondary me-2" type="button">Back to main website</button>
+    <button class="btn btn-sm btn-outline-warning me-2" onclick="playAI()" type="button">Play vs Ai easy</button>
+    <button class="btn btn-sm btn-outline-danger" onclick="playAIhard()" type="button">Play vs Ai hard</button>
+  </form>
+</nav>
+
+<div id="popupContainer">
+  <div id="popupForm">
+    <div class="container">
+      <h2 class="my-3" id="winScreen">WINNER IS </h2>
+
+      <br><button class="btn btn-success m-5" onclick="playAgain()" id="closeFormButton">Play again?</button>
+      <br><button class="btn btn-danger m-5" onclick="playAIhard()" id="closeFormButton">Play again vs AI?
+        (hard)</button>
+      <br><button class="btn btn-warning m-5" onclick="playAI()" id="closeFormButton">Play again vs AI?
+        (easy)</button>
+    </div>
+  </div>
+</div>
+
+
+
+<h1 class="text-center">Tic tac toe</h1>
+<div class="container">
+  <table class="board center">
+    <tr>
+      <td>
+        <h5 class="text-center">How to play:</h5>
+        <p class="text-center">The first person to click will be X, second is O.</p>
+        <p class="text-center">coordinate 0:0</p>
+      </td>
+      <td>
+        <p class="text-center">coordinate 1:0</p>
+      </td>
+      <td>
+        <p class="text-center">coordinate 2:0</p>
+      </td>
+      <td>
+        <p class="text-center">coordinate 3:0</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="text-center">coordinate 0:1</p>
+      </td>
+      <td onclick="choose(1)">
+        <p class="spot" id="spot1"></p>
+      </td>
+      <td onclick="choose(2)">
+        <p class="spot" id="spot2"></p>
+      </td>
+      <td onclick="choose(3)">
+        <p class="spot" id="spot3"></p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="text-center">coordinate 0:2</p>
+      </td>
+      <td onclick="choose(4)">
+        <p class="spot" id="spot4"></p>
+      </td>
+      <td onclick="choose(5)">
+        <p class="spot" id="spot5"></p>
+      </td>
+      <td onclick="choose(6)">
+        <p class="spot" id="spot6"></p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p class="text-center">coordinate 0:3</p>
+      </td>
+      <td onclick="choose(7)">
+        <p class="spot" id="spot7"></p>
+      </td>
+      <td onclick="choose(8)">
+        <p class="spot" id="spot8"></p>
+      </td>
+      <td onclick="choose(9)">
+        <p class="spot" id="spot9"></p>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<body>
+  <script src="tictactoe.js">
+  </script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
